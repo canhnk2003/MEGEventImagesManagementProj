@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MEGImageManagement\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj": {}
+    "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj": {}
   },
   "projects": {
-    "D:\\MEGImageManagement\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj": {
+    "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MEGImageManagement\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj",
+        "projectUniqueName": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj",
         "projectName": "MEGEventImageManagement",
-        "projectPath": "D:\\MEGImageManagement\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj",
+        "projectPath": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "D:\\MEGImageManagement\\MEGEventImageManagement\\MEGEventImageManagement\\obj\\",
+        "outputPath": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -55,6 +55,10 @@
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[2.1.4, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

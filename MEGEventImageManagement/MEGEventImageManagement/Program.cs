@@ -26,6 +26,18 @@ namespace MEGEventImageManagement
                     ValidateAudience = false
                 };
             });
+
+            // Thêm d?ch v? CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()   // Cho phép b?t k? ngu?n g?c (origin) nào
+                          .AllowAnyMethod()   // Cho phép t?t c? các ph??ng th?c HTTP (GET, POST, PUT, DELETE, v.v.)
+                          .AllowAnyHeader();  // Cho phép t?t c? các header
+                });
+            });
+
             builder.Services.AddAuthentication();
 
             builder.Services.AddControllers();
@@ -42,6 +54,10 @@ namespace MEGEventImageManagement
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseStaticFiles();
+            // S? d?ng CORS
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 

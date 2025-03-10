@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK2_9513bf0b-3633-485d-9ea3-f0c67334215d.gif",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK2_9513bf0b-3633-485d-9ea3-f0c67334215d.gif"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.MEGEventImageManagement.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.MEGEventImageManagement.props",
+      "PackagePath": "build\\MEGEventImageManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.MEGEventImageManagement.props",
+      "PackagePath": "buildMultiTargeting\\MEGEventImageManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.MEGEventImageManagement.props",
+      "PackagePath": "buildTransitive\\MEGEventImageManagement.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

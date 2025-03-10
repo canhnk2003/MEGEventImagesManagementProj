@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pq6B3lkceNY/8dDc9kWXJfGwmhQFzWeRmsDPO5Ob01jeuyD2IeDMKqseuOtVlxZEfpWa5ERDmXixeEJRdWgdBw==",
+  "dgSpecHash": "8Wn5NAg4x/Jd8Ig8gcH/OCVuE9ufBow1SxCZgWXemmry8PXESKmuSS4hSmZZbKcUuNuP4yn5VXLBjcf1BBvpgQ==",
   "success": true,
-  "projectFilePath": "D:\\MEGImageManagement\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj",
+  "projectFilePath": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\MEGEventImageManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.33\\microsoft.aspnetcore.authentication.jwtbearer.6.0.33.nupkg.sha512",
@@ -24,6 +24,7 @@
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",

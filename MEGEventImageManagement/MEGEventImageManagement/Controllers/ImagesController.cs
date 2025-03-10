@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace MEGEventImageManagement.Controllers
 {
@@ -12,21 +13,43 @@ namespace MEGEventImageManagement.Controllers
     public class ImagesController : ControllerBase
     {
         private readonly string _connectionString;
+        private readonly string _uploadFolder;
 
         // 🔹 Khởi tạo connection string trong constructor
         public ImagesController(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ConnStr");
+            // Khởi tạo thư mục lưu ảnh
+            _uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(_uploadFolder))
+            {
+                Directory.CreateDirectory(_uploadFolder);
+            }
         }
 
         // 🟡 Thêm nhiều ảnh cùng lúc
         [HttpPost("add")]
         [Authorize]
-        public async Task<IActionResult> AddImages([FromBody] List<Image> images)
+        public async Task<IActionResult> AddImages([FromForm] List<IFormFile> files, [FromForm] string metadataJson)
         {
-            if (images == null || images.Count == 0)
+            if (files == null || files.Count == 0)
             {
-                return BadRequest(new { message = "Danh sách ảnh không được để trống." });
+                return BadRequest(new { message = "Vui lòng chọn ít nhất 1 ảnh để upload." });
+            }
+
+            // Chuyển JSON metadata thành danh sách đối tượng
+            List<Image> images;
+            try
+            {
+                images = JsonConvert.DeserializeObject<List<Image>>(metadataJson);
+                if (images == null || images.Count != files.Count)
+                {
+                    return BadRequest(new { message = "Số lượng ảnh và metadata không khớp." });
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Metadata không hợp lệ." });
             }
 
             try
@@ -39,24 +62,41 @@ namespace MEGEventImageManagement.Controllers
                         try
                         {
                             // Lấy ID lớn nhất hiện tại
-                            int maxId = await connection.ExecuteScalarAsync<int>(
-                                "SELECT ISNULL(MAX(Id), 0) FROM Image", transaction: transaction);
+                            int maxId = await connection.ExecuteScalarAsync<int>("SELECT ISNULL(MAX(Id), 0) FROM Image", transaction: transaction);
 
-                            // Danh sách ảnh sẽ thêm
                             var imagesToInsert = new List<object>();
 
-                            foreach (var image in images)
+                            for (int i = 0; i < files.Count; i++)
                             {
-                                maxId++; // Tăng ID lên 1
-                                imagesToInsert.Add(new
+                                var file = files[i];
+                                var image = images[i];
+
+                                if (file.Length > 0)
                                 {
-                                    Id = maxId,
-                                    image.Name,
-                                    image.Description,
-                                    image.TimeOccurs,
-                                    image.Path,
-                                    image.EventId
-                                });
+                                    // Đặt tên file theo quy tắc: <Năm>_<EventId>_<Guid>.<ext>
+                                    string fileName = $"{image.TimeOccurs.Year}_{image.EventId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                                    string filePath = Path.Combine(_uploadFolder, fileName);
+
+                                    // Lưu ảnh vào server
+                                    using (var stream = new FileStream(filePath, FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(stream);
+                                    }
+
+                                    // Tăng ID lên 1
+                                    maxId++;
+
+                                    // Thêm thông tin vào danh sách lưu DB
+                                    imagesToInsert.Add(new
+                                    {
+                                        Id = maxId,
+                                        image.Name,
+                                        image.Description,
+                                        image.TimeOccurs,
+                                        Path = fileName, // Chỉ lưu tên file vào DB
+                                        image.EventId
+                                    });
+                                }
                             }
 
                             // Câu lệnh SQL thêm ảnh
@@ -84,17 +124,71 @@ namespace MEGEventImageManagement.Controllers
             }
         }
 
+
         // 🟠 Cập nhật thông tin ảnh
         [HttpPut("update/{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateImage(int id, [FromBody] Image model)
+        public async Task<IActionResult> UpdateImage(int id, [FromForm] IFormFile? file, [FromForm] string metadataJson)
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
+                    await connection.OpenAsync();
+
+                    // Lấy thông tin ảnh cũ
+                    var oldImage = await connection.QueryFirstOrDefaultAsync<Image>(
+                        "SELECT * FROM Image WHERE Id = @Id", new { Id = id });
+
+                    if (oldImage == null)
+                    {
+                        return NotFound(new { message = "Không tìm thấy ảnh để cập nhật." });
+                    }
+
+                    // Chuyển metadata từ JSON sang object
+                    var model = JsonConvert.DeserializeObject<Image>(metadataJson);
+                    if (model == null)
+                    {
+                        return BadRequest(new { message = "Metadata không hợp lệ." });
+                    }
+
+                    string newFilePath = oldImage.Path; // Giữ nguyên ảnh cũ nếu không có ảnh mới
+
+                    if (file != null && file.Length > 0)
+                    {
+
+                        // Xóa ảnh cũ (nếu có)
+                        if (!string.IsNullOrEmpty(oldImage.Path))
+                        {
+                            string oldFilePath = Path.Combine(_uploadFolder, oldImage.Path);
+                            if (System.IO.File.Exists(oldFilePath))
+                            {
+                                System.IO.File.Delete(oldFilePath);
+                            }
+                        }
+
+                        // Tạo tên file mới
+                        string newFileName = $"{model.TimeOccurs.Year}_{model.EventId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                        newFilePath = newFileName;
+
+                        // Lưu ảnh mới vào server
+                        string fullPath = Path.Combine(_uploadFolder, newFileName);
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                    }
+
+                    // Cập nhật database
                     var sql = "UPDATE Image SET Name = @Name, Description = @Description, TimeOccurs = @TimeOccurs, Path = @Path WHERE Id = @Id";
-                    var result = await connection.ExecuteAsync(sql, new { model.Name, model.Description, model.TimeOccurs, model.Path, Id = id });
+                    var result = await connection.ExecuteAsync(sql, new
+                    {
+                        model.Name,
+                        model.Description,
+                        model.TimeOccurs,
+                        Path = newFilePath,
+                        Id = id
+                    });
 
                     if (result > 0)
                         return Ok(new { message = "Cập nhật ảnh thành công." });
@@ -330,29 +424,6 @@ namespace MEGEventImageManagement.Controllers
             }
         }
 
-        // 🚨 Xóa hoàn toàn ảnh đã xóa tạm
-        [HttpDelete("permanent-delete/{id}")]
-        [Authorize]
-        public async Task<IActionResult> PermanentDeleteImage(int id)
-        {
-            try
-            {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    var sql = "DELETE FROM DeletedImages WHERE Id = @Id";
-                    var result = await connection.ExecuteAsync(sql, new { Id = id });
-
-                    if (result > 0)
-                        return Ok(new { message = "Ảnh đã bị xóa hoàn toàn." });
-
-                    return NotFound(new { message = "Không tìm thấy ảnh để xóa vĩnh viễn." });
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
-            }
-        }
         //Xóa nhiều ảnh, xóa thật
         [HttpDelete("permanent-delete")]
         public async Task<IActionResult> DeleteImagesPermanently([FromBody] List<int> imageIds)
@@ -367,19 +438,29 @@ namespace MEGEventImageManagement.Controllers
                 {
                     try
                     {
-                        // Kiểm tra ảnh có tồn tại trong bảng DeletedImages không
-                        var queryCheck = "SELECT COUNT(*) FROM DeletedImages WHERE Id IN @Ids";
-                        int count = await connection.ExecuteScalarAsync<int>(queryCheck, new { Ids = imageIds }, transaction);
+                        // Lấy danh sách ảnh cần xóa để lấy đường dẫn file
+                        var queryGetPaths = "SELECT Path FROM DeletedImages WHERE Id IN @Ids";
+                        var imagePaths = (await connection.QueryAsync<string>(queryGetPaths, new { Ids = imageIds }, transaction)).ToList();
 
-                        if (count == 0)
+                        if (!imagePaths.Any())
                             return NotFound(new { message = "Không tìm thấy ảnh nào để xóa." });
 
                         // Xóa ảnh khỏi database
                         var queryDelete = "DELETE FROM DeletedImages WHERE Id IN @Ids";
                         await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
 
+                        // Xóa ảnh khỏi thư mục server
+                        foreach (var imagePath in imagePaths)
+                        {
+                            string filePath = Path.Combine(_uploadFolder, imagePath);
+                            if (System.IO.File.Exists(filePath))
+                            {
+                                System.IO.File.Delete(filePath);
+                            }
+                        }
+
                         await transaction.CommitAsync();
-                        return Ok(new { message = "Xóa ảnh vĩnh viễn thành công.", deletedCount = count });
+                        return Ok(new { message = "Xóa ảnh vĩnh viễn thành công.", deletedCount = imagePaths.Count });
                     }
                     catch (Exception ex)
                     {
