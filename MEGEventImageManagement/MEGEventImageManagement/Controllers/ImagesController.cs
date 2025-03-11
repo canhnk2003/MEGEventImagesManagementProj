@@ -27,6 +27,77 @@ namespace MEGEventImageManagement.Controllers
             }
         }
 
+        #region Helper Methods
+
+        // Hàm thực hiện một hành động trong transaction, xử lý commit/rollback tự động
+        private async Task<IActionResult> ExecuteInTransactionAsync(Func<SqlConnection, SqlTransaction, Task<IActionResult>> func)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = await connection.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        var result = await func(connection, (SqlTransaction) transaction);
+                        await transaction.CommitAsync();
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        await transaction.RollbackAsync();
+                        return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
+                    }
+                }
+            }
+        }
+
+        // Hàm lưu file và trả về tên file mới theo quy tắc: <Năm>_<EventId>_<Guid>.<ext>
+        private async Task<string> SaveFileAsync(IFormFile file, int year, string eventId)
+        {
+            string fileName = $"{year}_{eventId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            string filePath = Path.Combine(_uploadFolder, fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return fileName;
+        }
+
+        // Hàm xóa file nếu tồn tại
+        private void DeleteFile(string fileName)
+        {
+            string filePath = Path.Combine(_uploadFolder, fileName);
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+        }
+
+        // Hàm lấy giá trị Id lớn nhất từ bảng truyền vào
+        private async Task<int> GetMaxIdAsync(SqlConnection connection, SqlTransaction transaction, string tableName)
+        {
+            string sql = $"SELECT ISNULL(MAX(Id), 0) FROM {tableName}";
+            return await connection.ExecuteScalarAsync<int>(sql, transaction: transaction);
+        }
+
+        // Hàm thử deserialize JSON metadata
+        private bool TryDeserializeMetadata<T>(string json, out T result)
+        {
+            try
+            {
+                result = JsonConvert.DeserializeObject<T>(json);
+                return true;
+            }
+            catch
+            {
+                result = default;
+                return false;
+            }
+        }
+
+        #endregion
+
         // 🟡 Thêm nhiều ảnh cùng lúc
         [HttpPost("add")]
         [Authorize]
@@ -37,93 +108,44 @@ namespace MEGEventImageManagement.Controllers
                 return BadRequest(new { message = "Vui lòng chọn ít nhất 1 ảnh để upload." });
             }
 
-            // Chuyển JSON metadata thành danh sách đối tượng
-            List<Image> images;
-            try
+            if (!TryDeserializeMetadata<List<Image>>(metadataJson, out var images) || images == null || images.Count != files.Count)
             {
-                images = JsonConvert.DeserializeObject<List<Image>>(metadataJson);
-                if (images == null || images.Count != files.Count)
-                {
-                    return BadRequest(new { message = "Số lượng ảnh và metadata không khớp." });
-                }
-            }
-            catch (Exception)
-            {
-                return BadRequest(new { message = "Metadata không hợp lệ." });
+                return BadRequest(new { message = "Số lượng ảnh và metadata không khớp hoặc metadata không hợp lệ." });
             }
 
-            try
+            return await ExecuteInTransactionAsync(async (connection, transaction) =>
             {
-                using (var connection = new SqlConnection(_connectionString))
+                int maxId = await GetMaxIdAsync(connection, transaction, "Image");
+                var imagesToInsert = new List<object>();
+
+                for (int i = 0; i < files.Count; i++)
                 {
-                    await connection.OpenAsync();
-                    using (var transaction = await connection.BeginTransactionAsync())
+                    var file = files[i];
+                    var image = images[i];
+
+                    if (file.Length > 0)
                     {
-                        try
+                        // Lưu ảnh sử dụng hàm dùng chung
+                        string fileName = await SaveFileAsync(file, image.TimeOccurs.Year, image.EventId);
+                        maxId++;
+                        imagesToInsert.Add(new
                         {
-                            // Lấy ID lớn nhất hiện tại
-                            int maxId = await connection.ExecuteScalarAsync<int>("SELECT ISNULL(MAX(Id), 0) FROM Image", transaction: transaction);
-
-                            var imagesToInsert = new List<object>();
-
-                            for (int i = 0; i < files.Count; i++)
-                            {
-                                var file = files[i];
-                                var image = images[i];
-
-                                if (file.Length > 0)
-                                {
-                                    // Đặt tên file theo quy tắc: <Năm>_<EventId>_<Guid>.<ext>
-                                    string fileName = $"{image.TimeOccurs.Year}_{image.EventId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-                                    string filePath = Path.Combine(_uploadFolder, fileName);
-
-                                    // Lưu ảnh vào server
-                                    using (var stream = new FileStream(filePath, FileMode.Create))
-                                    {
-                                        await file.CopyToAsync(stream);
-                                    }
-
-                                    // Tăng ID lên 1
-                                    maxId++;
-
-                                    // Thêm thông tin vào danh sách lưu DB
-                                    imagesToInsert.Add(new
-                                    {
-                                        Id = maxId,
-                                        image.Name,
-                                        image.Description,
-                                        image.TimeOccurs,
-                                        Path = fileName, // Chỉ lưu tên file vào DB
-                                        image.EventId
-                                    });
-                                }
-                            }
-
-                            // Câu lệnh SQL thêm ảnh
-                            var sql = "INSERT INTO Image (Id, Name, Description, TimeOccurs, Path, EventId) " +
-                                      "VALUES (@Id, @Name, @Description, @TimeOccurs, @Path, @EventId)";
-
-                            // Thực thi thêm danh sách ảnh
-                            var result = await connection.ExecuteAsync(sql, imagesToInsert, transaction);
-
-                            await transaction.CommitAsync();
-
-                            return Ok(new { message = $"Thêm {result} ảnh thành công." });
-                        }
-                        catch (Exception ex)
-                        {
-                            await transaction.RollbackAsync();
-                            return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
-                        }
+                            Id = maxId,
+                            image.Name,
+                            image.Description,
+                            image.TimeOccurs,
+                            Path = fileName, // chỉ lưu tên file
+                            image.EventId
+                        });
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
-            }
-        }
 
+                var sql = "INSERT INTO Image (Id, Name, Description, TimeOccurs, Path, EventId) " +
+                          "VALUES (@Id, @Name, @Description, @TimeOccurs, @Path, @EventId)";
+                var result = await connection.ExecuteAsync(sql, imagesToInsert, transaction);
+                return Ok(new { message = $"Thêm {result} ảnh thành công." });
+            });
+        }
 
         // 🟠 Cập nhật thông tin ảnh
         [HttpPut("update/{id}")]
@@ -145,9 +167,7 @@ namespace MEGEventImageManagement.Controllers
                         return NotFound(new { message = "Không tìm thấy ảnh để cập nhật." });
                     }
 
-                    // Chuyển metadata từ JSON sang object
-                    var model = JsonConvert.DeserializeObject<Image>(metadataJson);
-                    if (model == null)
+                    if (!TryDeserializeMetadata<Image>(metadataJson, out var model) || model == null)
                     {
                         return BadRequest(new { message = "Metadata không hợp lệ." });
                     }
@@ -156,30 +176,16 @@ namespace MEGEventImageManagement.Controllers
 
                     if (file != null && file.Length > 0)
                     {
-
                         // Xóa ảnh cũ (nếu có)
                         if (!string.IsNullOrEmpty(oldImage.Path))
                         {
-                            string oldFilePath = Path.Combine(_uploadFolder, oldImage.Path);
-                            if (System.IO.File.Exists(oldFilePath))
-                            {
-                                System.IO.File.Delete(oldFilePath);
-                            }
+                            DeleteFile(oldImage.Path);
                         }
 
-                        // Tạo tên file mới
-                        string newFileName = $"{model.TimeOccurs.Year}_{model.EventId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-                        newFilePath = newFileName;
-
-                        // Lưu ảnh mới vào server
-                        string fullPath = Path.Combine(_uploadFolder, newFileName);
-                        using (var stream = new FileStream(fullPath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
+                        // Lưu ảnh mới
+                        newFilePath = await SaveFileAsync(file, model.TimeOccurs.Year, model.EventId);
                     }
 
-                    // Cập nhật database
                     var sql = "UPDATE Image SET Name = @Name, Description = @Description, TimeOccurs = @TimeOccurs, Path = @Path WHERE Id = @Id";
                     var result = await connection.ExecuteAsync(sql, new
                     {
@@ -213,7 +219,6 @@ namespace MEGEventImageManagement.Controllers
                 {
                     var sql = "SELECT * FROM Image";
                     var images = await connection.QueryAsync<Image>(sql);
-
                     return Ok(images);
                 }
             }
@@ -234,7 +239,6 @@ namespace MEGEventImageManagement.Controllers
                 {
                     var sql = "SELECT * FROM Image WHERE EventId = @EventId";
                     var images = await connection.QueryAsync<Image>(sql, new { EventId = eventId });
-
                     return Ok(images);
                 }
             }
@@ -255,10 +259,8 @@ namespace MEGEventImageManagement.Controllers
                 {
                     var sql = "SELECT * FROM Image WHERE Id = @Id";
                     var image = await connection.QueryFirstOrDefaultAsync<Image>(sql, new { Id = id });
-
                     if (image == null)
                         return NotFound(new { message = "Không tìm thấy ảnh." });
-
                     return Ok(image);
                 }
             }
@@ -276,64 +278,44 @@ namespace MEGEventImageManagement.Controllers
             if (imageIds == null || !imageIds.Any())
                 return BadRequest(new { message = "Danh sách ID không hợp lệ." });
 
-            using (var connection = new SqlConnection(_connectionString))
+            return await ExecuteInTransactionAsync(async (connection, transaction) =>
             {
-                await connection.OpenAsync();
-                using (var transaction = await connection.BeginTransactionAsync())
+                var queryGetImages = "SELECT * FROM Image WHERE Id IN @Ids";
+                var images = (await connection.QueryAsync<Image>(queryGetImages, new { Ids = imageIds }, transaction)).ToList();
+
+                if (images.Count == 0)
+                    return NotFound(new { message = "Không tìm thấy ảnh nào để xóa." });
+
+                int maxId = await GetMaxIdAsync(connection, transaction, "DeletedImages");
+                var imagesToInsert = new List<object>();
+
+                foreach (var image in images)
                 {
-                    try
+                    maxId++;
+                    imagesToInsert.Add(new
                     {
-                        // Lấy danh sách ảnh từ bảng Image
-                        var queryGetImages = "SELECT * FROM Image WHERE Id IN @Ids";
-                        var images = (await connection.QueryAsync<Image>(queryGetImages, new { Ids = imageIds }, transaction)).ToList();
+                        Id = maxId,
+                        image.Name,
+                        image.Description,
+                        image.TimeOccurs,
+                        image.Path,
+                        image.EventId
+                    });
+                }
 
-                        if (images.Count == 0)
-                            return NotFound(new { message = "Không tìm thấy ảnh nào để xóa." });
-
-                        // Lấy ID lớn nhất trong bảng DeletedImages
-                        int maxId = await connection.ExecuteScalarAsync<int>(
-                            "SELECT ISNULL(MAX(Id), 0) FROM DeletedImages", transaction: transaction);
-
-                        // Danh sách ảnh cần thêm vào DeletedImages
-                        var imagesToInsert = new List<object>();
-
-                        foreach (var image in images)
-                        {
-                            maxId++; // Tăng ID lên 1
-                            imagesToInsert.Add(new
-                            {
-                                Id = maxId,
-                                image.Name,
-                                image.Description,
-                                image.TimeOccurs,
-                                image.Path,
-                                image.EventId
-                            });
-                        }
-
-                        if (imagesToInsert.Any())
-                        {
-                            // Chèn vào DeletedImages
-                            var queryInsert = @"
+                if (imagesToInsert.Any())
+                {
+                    var queryInsert = @"
                         INSERT INTO DeletedImages (Id, Name, Description, TimeOccurs, Path, EventId)
                         VALUES (@Id, @Name, @Description, @TimeOccurs, @Path, @EventId)";
-                            await connection.ExecuteAsync(queryInsert, imagesToInsert, transaction);
-                        }
-
-                        // Xóa ảnh khỏi bảng Image
-                        var queryDelete = "DELETE FROM Image WHERE Id IN @Ids";
-                        await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
-
-                        await transaction.CommitAsync();
-                        return Ok(new { message = "Xóa tạm thành công.", deletedCount = imagesToInsert.Count });
-                    }
-                    catch (Exception ex)
-                    {
-                        await transaction.RollbackAsync();
-                        return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
-                    }
+                    await connection.ExecuteAsync(queryInsert, imagesToInsert, transaction);
                 }
-            }
+
+                var queryDelete = "DELETE FROM Image WHERE Id IN @Ids";
+                await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
+
+                return Ok(new { message = "Xóa tạm thành công.", deletedCount = imagesToInsert.Count });
+            });
         }
 
         // 🔍 Lấy danh sách ảnh đã bị xóa tạm
@@ -347,7 +329,6 @@ namespace MEGEventImageManagement.Controllers
                 {
                     var sql = "SELECT * FROM DeletedImages";
                     var images = await connection.QueryAsync<Image>(sql);
-
                     return Ok(images);
                 }
             }
@@ -364,111 +345,73 @@ namespace MEGEventImageManagement.Controllers
             if (imageIds == null || !imageIds.Any())
                 return BadRequest(new { message = "Danh sách ID không hợp lệ." });
 
-            using (var connection = new SqlConnection(_connectionString))
+            return await ExecuteInTransactionAsync(async (connection, transaction) =>
             {
-                await connection.OpenAsync();
-                using (var transaction = await connection.BeginTransactionAsync())
+                var queryGet = "SELECT * FROM DeletedImages WHERE Id IN @Ids";
+                var deletedImages = (await connection.QueryAsync<Image>(queryGet, new { Ids = imageIds }, transaction)).ToList();
+
+                if (!deletedImages.Any())
+                    return NotFound(new { message = "Không tìm thấy ảnh nào để khôi phục." });
+
+                int maxId = await GetMaxIdAsync(connection, transaction, "Image");
+                var imagesToRestore = new List<object>();
+
+                foreach (var image in deletedImages)
                 {
-                    try
+                    maxId++;
+                    imagesToRestore.Add(new
                     {
-                        // Lấy danh sách ảnh từ bảng DeletedImages
-                        var queryGet = "SELECT * FROM DeletedImages WHERE Id IN @Ids";
-                        var deletedImages = (await connection.QueryAsync<Image>(queryGet, new { Ids = imageIds }, transaction)).ToList();
+                        Id = maxId,
+                        image.Name,
+                        image.Description,
+                        image.TimeOccurs,
+                        image.Path,
+                        image.EventId
+                    });
+                }
 
-                        if (!deletedImages.Any())
-                            return NotFound(new { message = "Không tìm thấy ảnh nào để khôi phục." });
-
-                        // Lấy ID lớn nhất trong bảng Image
-                        int maxId = await connection.ExecuteScalarAsync<int>(
-                            "SELECT ISNULL(MAX(Id), 0) FROM Image", transaction: transaction);
-
-                        // Tạo danh sách ảnh cần thêm vào Image với ID mới
-                        var imagesToRestore = new List<object>();
-
-                        foreach (var image in deletedImages)
-                        {
-                            maxId++; // Tăng ID lên 1
-                            imagesToRestore.Add(new
-                            {
-                                Id = maxId,
-                                image.Name,
-                                image.Description,
-                                image.TimeOccurs,
-                                image.Path,
-                                image.EventId
-                            });
-                        }
-
-                        if (imagesToRestore.Any())
-                        {
-                            // Chèn lại vào bảng Image
-                            var queryInsert = @"
+                if (imagesToRestore.Any())
+                {
+                    var queryInsert = @"
                         INSERT INTO Image (Id, Name, Description, TimeOccurs, Path, EventId)
                         VALUES (@Id, @Name, @Description, @TimeOccurs, @Path, @EventId)";
-                            await connection.ExecuteAsync(queryInsert, imagesToRestore, transaction);
-                        }
-
-                        // Xóa ảnh khỏi bảng DeletedImages
-                        var queryDelete = "DELETE FROM DeletedImages WHERE Id IN @Ids";
-                        await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
-
-                        await transaction.CommitAsync();
-                        return Ok(new { message = "Khôi phục ảnh thành công.", restoredCount = imagesToRestore.Count });
-                    }
-                    catch (Exception ex)
-                    {
-                        await transaction.RollbackAsync();
-                        return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
-                    }
+                    await connection.ExecuteAsync(queryInsert, imagesToRestore, transaction);
                 }
-            }
+
+                var queryDelete = "DELETE FROM DeletedImages WHERE Id IN @Ids";
+                await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
+
+                return Ok(new { message = "Khôi phục ảnh thành công.", restoredCount = imagesToRestore.Count });
+            });
         }
 
-        //Xóa nhiều ảnh, xóa thật
+        // Xóa nhiều ảnh, xóa thật
         [HttpDelete("permanent-delete")]
         public async Task<IActionResult> DeleteImagesPermanently([FromBody] List<int> imageIds)
         {
             if (imageIds == null || !imageIds.Any())
                 return BadRequest(new { message = "Danh sách ID không hợp lệ." });
 
-            using (var connection = new SqlConnection(_connectionString))
+            return await ExecuteInTransactionAsync(async (connection, transaction) =>
             {
-                await connection.OpenAsync();
-                using (var transaction = await connection.BeginTransactionAsync())
+                var queryGetPaths = "SELECT Path FROM DeletedImages WHERE Id IN @Ids";
+                var imagePaths = (await connection.QueryAsync<string>(queryGetPaths, new { Ids = imageIds }, transaction)).ToList();
+
+                if (!imagePaths.Any())
+                    return NotFound(new { message = "Không tìm thấy ảnh nào để xóa." });
+
+                var queryDelete = "DELETE FROM DeletedImages WHERE Id IN @Ids";
+                await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
+
+                foreach (var imagePath in imagePaths)
                 {
-                    try
-                    {
-                        // Lấy danh sách ảnh cần xóa để lấy đường dẫn file
-                        var queryGetPaths = "SELECT Path FROM DeletedImages WHERE Id IN @Ids";
-                        var imagePaths = (await connection.QueryAsync<string>(queryGetPaths, new { Ids = imageIds }, transaction)).ToList();
-
-                        if (!imagePaths.Any())
-                            return NotFound(new { message = "Không tìm thấy ảnh nào để xóa." });
-
-                        // Xóa ảnh khỏi database
-                        var queryDelete = "DELETE FROM DeletedImages WHERE Id IN @Ids";
-                        await connection.ExecuteAsync(queryDelete, new { Ids = imageIds }, transaction);
-
-                        // Xóa ảnh khỏi thư mục server
-                        foreach (var imagePath in imagePaths)
-                        {
-                            string filePath = Path.Combine(_uploadFolder, imagePath);
-                            if (System.IO.File.Exists(filePath))
-                            {
-                                System.IO.File.Delete(filePath);
-                            }
-                        }
-
-                        await transaction.CommitAsync();
-                        return Ok(new { message = "Xóa ảnh vĩnh viễn thành công.", deletedCount = imagePaths.Count });
-                    }
-                    catch (Exception ex)
-                    {
-                        await transaction.RollbackAsync();
-                        return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
-                    }
+                    DeleteFile(imagePath);
                 }
-            }
+
+                return Ok(new { message = "Xóa ảnh vĩnh viễn thành công.", deletedCount = imagePaths.Count });
+            });
         }
     }
+
+
 }
