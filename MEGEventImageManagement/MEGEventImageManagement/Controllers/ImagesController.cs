@@ -39,7 +39,7 @@ namespace MEGEventImageManagement.Controllers
                 {
                     try
                     {
-                        var result = await func(connection, (SqlTransaction) transaction);
+                        var result = await func(connection, (SqlTransaction)transaction);
                         await transaction.CommitAsync();
                         return result;
                     }
@@ -115,6 +115,20 @@ namespace MEGEventImageManagement.Controllers
 
             return await ExecuteInTransactionAsync(async (connection, transaction) =>
             {
+                //Xóa hết ảnh trong "SK01" nếu có EventId = "SK01"
+                if (images.Any(x => x.EventId == "SK01"))
+                {
+                    var oldImages = await connection.QueryAsync<string>(
+                "SELECT Path FROM Image WHERE EventId = @EventId", new { EventId = "SK01" }, transaction);
+
+                    foreach (var filePath in oldImages)
+                    {
+                        DeleteFile(filePath);
+                    }
+
+                    await connection.ExecuteAsync("DELETE FROM Image WHERE EventId = @EventId", new { EventId = "SK01" }, transaction);
+                }
+
                 int maxId = await GetMaxIdAsync(connection, transaction, "Image");
                 var imagesToInsert = new List<object>();
 

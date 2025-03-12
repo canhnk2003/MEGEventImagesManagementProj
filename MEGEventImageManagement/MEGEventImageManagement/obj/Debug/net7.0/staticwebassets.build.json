@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "F5D/Pv2L57nnMFOo9tlXJMFP6Kj6iytt7D7JF61HsPw=",
+  "Hash": "GVtjXqaYr0tDBgvl0zPkAhPLbRth/WITnGUzwPYRH3c=",
   "Source": "MEGEventImageManagement",
   "BasePath": "_content/MEGEventImageManagement",
   "Mode": "Default",
@@ -16,6 +16,40 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_7c93aa17-7c77-4150-987f-23dcf6370976.jpg",
+      "SourceId": "MEGEventImageManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\",
+      "BasePath": "_content/MEGEventImageManagement",
+      "RelativePath": "uploads/2025_SK01_7c93aa17-7c77-4150-987f-23dcf6370976.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2025_SK01_7c93aa17-7c77-4150-987f-23dcf6370976.jpg"
+    },
+    {
+      "Identity": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_9db81289-e866-4be9-b3f6-8b9d2828a3cc.jpg",
+      "SourceId": "MEGEventImageManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\",
+      "BasePath": "_content/MEGEventImageManagement",
+      "RelativePath": "uploads/2025_SK01_9db81289-e866-4be9-b3f6-8b9d2828a3cc.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2025_SK01_9db81289-e866-4be9-b3f6-8b9d2828a3cc.jpg"
+    },
     {
       "Identity": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg",
       "SourceId": "MEGEventImageManagement",

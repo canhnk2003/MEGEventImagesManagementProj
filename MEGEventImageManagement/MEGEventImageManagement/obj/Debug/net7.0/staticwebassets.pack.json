@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_7c93aa17-7c77-4150-987f-23dcf6370976.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_7c93aa17-7c77-4150-987f-23dcf6370976.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_9db81289-e866-4be9-b3f6-8b9d2828a3cc.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_9db81289-e866-4be9-b3f6-8b9d2828a3cc.jpg"
+    },
+    {
       "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg",
       "PackagePath": "staticwebassets\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg"
     },
