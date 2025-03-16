@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - Admin MEG</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/library/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/library/bootstrap-icons/bootstrap-icons.min.css" />
+    <link href="assets/library/fontawesome-free/css/fontawesome.min.css" />
+    <link href="css/admin/styles.css" rel="stylesheet" />
+    <link href="css/admin/content.css" rel="stylesheet" />
+    <script
+      src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" href="index.html">MEG</a>
+      <!-- Sidebar Toggle-->
+      <button
+        class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+        id="sidebarToggle"
+        href="#!"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <!-- Navbar Search-->
+      <form
+        class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+      ></form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><i class="fas fa-user fa-fw"></i
+          ></a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <a
+                class="dropdown-item"
+                href="#!"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmLogout"
+                >Đăng xuất</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">Core</div>
+              <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                Trang chủ
+              </a>
+              <div class="sb-sidenav-menu-heading">Addons</div>
+              <a
+                class="nav-link"
+                href="eventManagement.html"
+                style="color: rgb(232, 232, 232)"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                Quản lý sự kiện
+              </a>
+              <a class="nav-link" href="imageManagement.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fa-solid fa-images"></i>
+                </div>
+                Quản lý ảnh MEG
+              </a>
+
+              <div class="sb-sidenav-menu-heading">Personal</div>
+              <a class="nav-link" href="change-password.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                </div>
+                Đổi mật khẩu
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">Quản lý sự kiện</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item">
+                <a href="index.html">Trang chủ</a>
+              </li>
+              <li class="breadcrumb-item active">Quản lý sự kiện</li>
+            </ol>
+            <div class="row align-items-center mb-4">
+              <!-- Ô tìm kiếm bên trái -->
+              <div class="col-md-3 col-6">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search for..."
+                  />
+                  <button class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                    <!-- Biểu tượng tìm kiếm -->
+                  </button>
+                </div>
+              </div>
+
+              <!-- Nút "Thêm mới" bên phải -->
+              <div class="col-md-9 col-6 text-end">
+                <button
+                  class="btn btn-success"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addEventModal"
+                >
+                  <i class="fa-solid fa-plus"></i> Thêm mới
+                </button>
+              </div>
+            </div>
+            <!-- Modal thêm sự kiện-->
+            <div
+              class="modal fade"
+              id="addEventModal"
+              aria-labelledby="eventModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">
+                      Thêm Sự Kiện
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label class="form-label">Mã sự kiện</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Nhập mã sự kiện"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Tên sự kiện</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Nhập tên sự kiện"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Nhập mô tả sự kiện"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Ngày diễn ra</label>
+                        <input type="date" class="form-control" />
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Đóng
+                    </button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Sửa Sự Kiện -->
+            <div
+              class="modal fade"
+              id="editEventModal"
+              aria-labelledby="editEventModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="editEventModalLabel">
+                      Sửa Sự Kiện
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label class="form-label">Mã sự kiện</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="editEventId"
+                          value="EVT001"
+                          readonly
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Tên sự kiện</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="editEventName"
+                          value="Hội Thảo Công Nghệ"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="editEventDesc"
+                          value="Giới thiệu công nghệ mới"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Ngày diễn ra</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="editEventDate"
+                          value="2025-04-10"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Hủy
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                      Lưu thay đổi
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal Xóa Sự Kiện -->
+            <div
+              class="modal fade"
+              id="deleteEventModal"
+              aria-labelledby="deleteEventModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteEventModalLabel">
+                      Xác nhận xóa
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa sự kiện này không?
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Hủy
+                    </button>
+                    <button type="button" class="btn btn-danger">Xóa</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Xác nhận Logout -->
+            <div class="modal fade" id="confirmLogout">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Thông báo</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">Bạn chắc chắn muốn đăng xuất?</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-dismiss="modal"
+                    >
+                      Đăng xuất
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid mt-4">
+              <div class="row">
+                <!-- Ảnh 1 -->
+                <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
+                  <div class="card">
+                    <img
+                      src="assets/img/ad-image-2.png"
+                      class="card-img-top"
+                      alt="Hình ảnh"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Event 1</h5>
+                      <p class="card-text">Đây là một sự kiện quan trọng</p>
+                      <div class="d-flex justify-content-center gap-2">
+                        <a href="detailIamgeEvent.html" class="btn btn-outline-primary btn-sm" title="Xem ảnh">
+                          <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <input id="inputFile" class="d-none" type="file" multiple/>
+                        <button id="btnAddImage" class="btn btn-outline-success btn-sm" title="Thêm ảnh vào sự kiện">
+                          <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <button class="btn btn-outline-warning btn-sm" title="Sửa thông tin sự kiện" data-bs-toggle="modal" data-bs-target="#editEventModal">
+                          <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm" title="Xóa sự kiện" data-bs-toggle="modal" data-bs-target="#deleteEventModal">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; MEG 2025</div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#btnAddImage").click(function () {
+          $("#inputFile").click();
+        });
+      });
+    </script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

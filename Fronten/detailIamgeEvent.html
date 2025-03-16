@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - Admin MEG</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/library/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/library/bootstrap-icons/bootstrap-icons.min.css" />
+    <link href="assets/library/fontawesome-free/css/fontawesome.min.css" />
+    <link href="css/admin/styles.css" rel="stylesheet" />
+    <link href="css/admin/content.css" rel="stylesheet" />
+    <script
+      src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" href="index.html">MEG</a>
+      <!-- Sidebar Toggle-->
+      <button
+        class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+        id="sidebarToggle"
+        href="#!"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <!-- Navbar Search-->
+      <form
+        class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+      ></form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><i class="fas fa-user fa-fw"></i
+          ></a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <a
+                class="dropdown-item"
+                href="#!"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmLogout"
+                >Đăng xuất</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">Core</div>
+              <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                Trang chủ
+              </a>
+              <div class="sb-sidenav-menu-heading">Addons</div>
+              <a
+                class="nav-link"
+                href="eventManagement.html"
+                style="color: rgb(232, 232, 232)"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                Quản lý sự kiện
+              </a>
+              <a class="nav-link" href="imageManagement.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fa-solid fa-images"></i>
+                </div>
+                Quản lý ảnh MEG
+              </a>
+
+              <div class="sb-sidenav-menu-heading">Personal</div>
+              <a class="nav-link" href="change-password.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                </div>
+                Đổi mật khẩu
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">Quản lý sự kiện</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item">
+                <a href="index.html">Trang chủ</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="eventManagement.html">Quản lý sự kiện</a>
+              </li>
+              <li class="breadcrumb-item active">Danh sách ảnh</li>
+            </ol>
+            <div class="row align-items-center mb-4">
+              <!-- Ô tìm kiếm bên trái -->
+              <div class="col-md-3 col-6">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search for..."
+                  />
+                  <button class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                    <!-- Biểu tượng tìm kiếm -->
+                  </button>
+                </div>
+              </div>
+
+              <!-- Nút "Xóa đã chọn" và "Thêm mới" bên phải -->
+              <div class="col-md-9 col-6 text-end">
+                <!-- Nút "Xóa đã chọn" -->
+                <button
+                  class="btn btn-danger me-2"
+                  id="btnDeleteImage"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteImageModal" title="Xóa ảnh đã chọn"
+                >
+                <i class="fa-solid fa-trash-can"></i> Xóa
+                </button>
+
+                <!-- Nút "Thêm mới" -->
+                 <input id="inputFile" class="d-none" type="file" multiple/>
+                <button id="btnAddImage"
+                  class="btn btn-success"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addImageModal" title="Thêm ảnh vào sự kiện"
+                >
+                  <i class="fa-solid fa-plus"></i> Thêm mới
+                </button>
+              </div>
+            </div>
+            <!-- Modal xác nhận xóa ảnh -->
+            <div
+              class="modal fade"
+              id="deleteImageModal"
+              aria-labelledby="deleteEventModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteEventModalLabel">
+                      Xác nhận xóa
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa ảnh không?
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Hủy
+                    </button>
+                    <button type="button" class="btn btn-danger">Xóa</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Xác nhận Logout -->
+            <div class="modal fade" id="confirmLogout">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Thông báo</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">Bạn chắc chắn muốn đăng xuất?</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-dismiss="modal"
+                    >
+                      Đăng xuất
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid mt-4">
+              <h2>Event</h2>
+              <div class="row">
+                <!-- Bắt đầu danh sách ảnh -->
+                <div
+                  class="col-xxl-1-5 col-xl-2 col-lg-3 col-md-4 col-sm-6 p-2"
+                  v-for="i in 16"
+                >
+                  <div class="card shadow-sm">
+                    <!-- Checkbox để chọn ảnh -->
+                    <input
+                      type="checkbox"
+                      class="select-checkbox"
+                      id="checkbox-{{i}}"
+                    />
+                    <label for="checkbox-{{i}}" class="checkbox-label"></label>
+                    <img
+                      src="assets/img/ad-image-1.png"
+                      class="card-img-top"
+                      alt="Image"
+                    />
+                    <div class="card-body">
+                      <p class="card-text text-start">
+                        Đây là một ảnh quan trọng
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; MEG 2025</div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#btnAddImage").click(function () {
+          $("#inputFile").click();
+        });
+      });
+    </script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
