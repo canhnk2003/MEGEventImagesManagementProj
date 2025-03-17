@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>MEG Event Image</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/library/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/library/bootstrap-icons/bootstrap-icons.min.css" />
+    <link href="assets/library/fontawesome-free/css/fontawesome.min.css" />
+    <link href="css/user/style.css" rel="stylesheet" />
+    <script
+      src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .carousel-item img {
+        width: 100%;
+        height: 700px; /* Đặt chiều cao cố định theo nhu cầu */
+        object-fit: cover; /* Cắt ảnh để phù hợp với khung mà không méo */
+      }
+      .event-list {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        white-space: nowrap;
+      }
+      .event-card {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        min-width: 200px;
+        text-align: center;
+      }
+      .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050;
+      }
+      .fullscreen .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: red;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+      .navbar-toggler {
+        border: none;
+      }
+      #btnShowHighLightEvent {
+        border-radius: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">Logo Image</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link home-btn me-3" href="#home-section">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link all-events-btn me-3" href="#events-section"
+                >All Events</a
+              >
+            </li>
+          </ul>
+          <button id="btnShowHighLightEvent" class="btn btn-primary">
+            Show highlight event
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-4" id="home-section">
+      <!-- Carousel -->
+      <div id="demo" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#demo"
+            data-bs-slide-to="0"
+            class="active"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#demo"
+            data-bs-slide-to="1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#demo"
+            data-bs-slide-to="2"
+          ></button>
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="assets/img/1.jpg"
+              alt="Los Angeles"
+              class="d-block"
+            />
+            <div class="carousel-caption">
+              <h3>Los Angeles</h3>
+              <p>We had such a great time in LA!</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="assets/img/2.jpg"
+              alt="Chicago"
+              class="d-block"
+            />
+            <div class="carousel-caption">
+              <h3>Chicago</h3>
+              <p>Thank you, Chicago!</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="assets/img/3.jpg"
+              alt="New York"
+              class="d-block"
+            />
+            <div class="carousel-caption">
+              <h3>New York</h3>
+              <p>We love the Big Apple!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#demo"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+      <h2 class="mt-4">Event</h2>
+      <div class="event-list">
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+      </div>
+      <h2 class="mt-4">Event</h2>
+      <div class="event-list">
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+      </div>
+      <h2 class="mt-4">Event</h2>
+      <div class="event-list">
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+      </div>
+      <h2 class="mt-4">Event</h2>
+      <div class="event-list">
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+      </div>
+      <h2 class="mt-4">Event</h2>
+      <div class="event-list">
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+        <div class="event-card">
+          Image <br />
+          Đây là một ảnh quan trọng
+        </div>
+      </div>
+    </div>
+    <div class="container mt-4" id="events-section">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="p-3 bg-danger text-white">Image</div>
+              <p>Đây là một ảnh quan trọng</p>
+              <button class="btn btn-success show-event-btn">Show</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fullscreen d-none" id="fullscreen-carousel">
+      <button class="close-btn">Close</button>
+      <div class="carousel slide w-75" id="carouselFullscreen">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div
+              class="d-block w-100 bg-danger text-white text-center"
+              style="height: 500px"
+            >
+              Image
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // $('.home-btn').click(function() {
+        //     $('#home-section').removeClass('d-none');
+        //     $('#events-section').addClass('d-none');
+        // });
+        // $('.all-events-btn').click(function() {
+        //     $('#home-section').addClass('d-none');
+        //     $('#events-section').removeClass('d-none');
+        // });
+        $(".highlight-btn, .show-event-btn").click(function () {
+          $("#fullscreen-carousel").removeClass("d-none");
+        });
+        $(".close-btn").click(function () {
+          $("#fullscreen-carousel").addClass("d-none");
+        });
+      });
+    </script>
+  </body>
+</html>
