@@ -224,7 +224,6 @@ namespace MEGEventImageManagement.Controllers
 
         // 🟢 Lấy danh sách tất cả ảnh
         [HttpGet("get")]
-        [Authorize]
         public async Task<IActionResult> GetAllImages()
         {
             try
@@ -244,7 +243,6 @@ namespace MEGEventImageManagement.Controllers
 
         // 🟡 Lấy danh sách ảnh theo EventId
         [HttpGet("getbyevent/{eventId}")]
-        [Authorize]
         public async Task<IActionResult> GetImagesByEventId(string eventId)
         {
             try
@@ -264,7 +262,6 @@ namespace MEGEventImageManagement.Controllers
 
         // 🔍 Lấy chi tiết ảnh theo Id
         [HttpGet("get/{id}")]
-        [Authorize]
         public async Task<IActionResult> GetImageById(int id)
         {
             try

@@ -20,5 +20,9 @@ namespace MEGEventImageManagement.Model
         [Required]
         [MaxLength(255)]
         public string Password { get; set; }
+
+        [MaxLength(500)]
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiry { get; set; }
     }
 }

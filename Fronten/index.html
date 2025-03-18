@@ -11,10 +11,6 @@
     <meta name="author" content="" />
     <title>Dashboard - Admin MEG</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
-      rel="stylesheet"
-    />
-    <link
       href="assets/library/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
     />
@@ -42,20 +38,7 @@
       <!-- Navbar Search-->
       <form
         class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
-      >
-        <div class="input-group">
-          <input
-            class="form-control"
-            type="text"
-            placeholder="Search for..."
-            aria-label="Search for..."
-            aria-describedby="btnNavbarSearch"
-          />
-          <button class="btn btn-primary" id="btnNavbarSearch" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </form>
+      ></form>
       <!-- Navbar-->
       <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
@@ -72,7 +55,15 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
           >
-            <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#confirmLogout">Đăng xuất</a></li>
+            <li>
+              <a
+                class="dropdown-item"
+                href=""
+                data-bs-toggle="modal"
+                data-bs-target="#confirmLogout"
+                >Đăng xuất</a
+              >
+            </li>
           </ul>
         </li>
       </ul>
@@ -148,6 +139,7 @@
                       Hủy
                     </button>
                     <button
+                      id="logout-btn"
                       type="button"
                       class="btn btn-danger"
                       data-bs-dismiss="modal"
@@ -161,21 +153,21 @@
             <div class="container-fluid mt-4">
               <h3>2025</h3>
               <div class="image-container" id="imageScroll">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-2.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-3.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-4.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-2.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
-                <img src="assets/img/ad-image-1.png" alt="Hình ảnh">
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-2.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-3.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-4.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-2.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+                <img src="assets/img/ad-image-1.png" alt="Hình ảnh" />
+              </div>
             </div>
-          </div>
           </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
@@ -191,44 +183,9 @@
     </div>
     <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
-    <script>
-       $(document).ready(function(){
-        // Tạo hiệu ứng scroll
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-            let container = $('#imageScroll');
-            
-            container.on('mousedown', function(e) {
-                isDown = true;
-                $(this).addClass('active');
-                startX = e.pageX - $(this).offset().left;
-                scrollLeft = $(this).scrollLeft();
-            });
-
-            $(document).on('mouseup', function() {
-                isDown = false;
-                container.removeClass('active');
-            });
-
-            container.on('mousemove', function(e) {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - $(this).offset().left;
-                const walk = (x - startX) * 1.5;
-                let newScrollLeft = scrollLeft - walk;
-                let maxScrollLeft = container[0].scrollWidth - container[0].clientWidth;
-                
-                if (newScrollLeft < 0) {
-                    newScrollLeft = 0;
-                } else if (newScrollLeft > maxScrollLeft) {
-                    newScrollLeft = maxScrollLeft;
-                }
-                
-                container.scrollLeft(newScrollLeft);
-            });
-        });
-  </script>
+    <script src="js/scrollImage.js"></script>
+    <script src="js/service/axios-jquery.js"></script>
+    <script src="js/service/logoutService.js"></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>

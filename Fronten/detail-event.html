@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Detail event - MEG Event Image</title>
+    <link
+      href="assets/library/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/library/bootstrap-icons/bootstrap-icons.min.css" />
+    <link href="assets/library/fontawesome-free/css/fontawesome.min.css" />
+    <link href="css/user/style.css" rel="stylesheet" />
+    <!-- <link href="css/admin/content.css" rel="stylesheet" /> -->
+    <script
+      src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="assets/img/1.jpg" alt="Logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link home-btn me-3"
+                href="index_user.html#home-section"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link all-events-btn me-3"
+                href="index_user.html#events-section"
+                >All Events</a
+              >
+            </li>
+          </ul>
+          <button id="btnShowHighLightEvent" class="btn btn-primary">
+            Show highlight event
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid mt-4" id="">
+      <h1 class="text-center mb-4 text-secondary">DETAIL EVENT</h1>
+      <div class="d-flex justify-content-between align-items-center px-5">
+        <div>
+          <h3>Event</h3>
+          <p>Description Event</p>
+        </div>
+        <div>
+          <button class="btn btn-primary">Present Event</button>
+        </div>
+      </div>
+      <div class="container-fluid mt-4 px-5">
+        <div class="image-container">
+          <img src="assets/img/1.jpg" alt="Image 1" />
+          <img src="assets/img/2.jpg" alt="Image 1" />
+          <img src="assets/img/3.jpg" alt="Image 1" />
+          <img src="assets/img/1.jpg" alt="Image 1" />
+          <img src="assets/img/2.jpg" alt="Image 1" />
+          <img src="assets/img/3.jpg" alt="Image 1" />
+          <img src="assets/img/1.jpg" alt="Image 1" />
+          <img src="assets/img/2.jpg" alt="Image 1" />
+          <img src="assets/img/3.jpg" alt="Image 1" />
+          <img src="assets/img/1.jpg" alt="Image 1" />
+          <img src="assets/img/2.jpg" alt="Image 1" />
+          <img src="assets/img/3.jpg" alt="Image 1" />
+          <img src="assets/img/1.jpg" alt="Image 1" />
+          <img src="assets/img/2.jpg" alt="Image 1" />
+          <img src="assets/img/3.jpg" alt="Image 1" />
+        </div>
+      </div>
+    </div>
+    <!-- Carousel Fullscreen (Ẩn mặc định) -->
+<div id="fullscreen-carousel" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex align-items-center justify-content-center">
+  <div class="position-relative w-100 h-100">
+      <div id="eventCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+          <!-- Indicators -->
+          <div class="carousel-indicators">
+              <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner h-100">
+              <div class="carousel-item active h-100">
+                  <img src="assets/img/1.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Slide 1">
+              </div>
+              <div class="carousel-item h-100">
+                  <img src="assets/img/2.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Slide 2">
+              </div>
+              <div class="carousel-item h-100">
+                  <img src="assets/img/3.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Slide 3">
+              </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+          </button>
+      </div>
+      <button id="closeCarousel" class="btn btn-danger position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; font-size: 1.5rem;">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+</div>
+    <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        let navbar = $(".navbar");
+
+        $(window).on("scroll", function () {
+          if ($(window).scrollTop() > 50) {
+            navbar.addClass("fixed-nav");
+          } else {
+            navbar.removeClass("fixed-nav");
+          }
+        });
+        $(".highlight-btn, .show-event-btn").click(function () {
+          $("#fullscreen-carousel").removeClass("d-none");
+        });
+        $(".close-btn").click(function () {
+          $("#fullscreen-carousel").addClass("d-none");
+        });
+        // Hiển thị carousel khi nhấn nút "Present Event"
+        $(".btn-primary").click(function () {
+            $("#fullscreen-carousel").removeClass("d-none");
+            $("body").css("overflow", "hidden"); // Ngăn cuộn trang khi carousel hiển thị
+        });
+        
+        // Đóng carousel khi nhấn nút "Close"
+        $("#closeCarousel").click(function () {
+            $("#fullscreen-carousel").addClass("d-none");
+            $("body").css("overflow", "auto"); // Cho phép cuộn lại sau khi đóng
+        });
+      });
+    </script>
+  </body>
+</html>

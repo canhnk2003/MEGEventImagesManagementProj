@@ -18,7 +18,6 @@ namespace MEGEventImageManagement.Controllers
         }
         // 🟢 API: Lấy danh sách tất cả sự kiện
         [HttpGet("get")]
-        [Authorize] // Yêu cầu đăng nhập
         public async Task<IActionResult> GetAllEvents()
         {
             try
@@ -39,7 +38,6 @@ namespace MEGEventImageManagement.Controllers
 
         // API: Lấy thông tin một sự kiện theo ID
         [HttpGet("get/{id}")]
-        [Authorize]
         public async Task<IActionResult> GetEventById(string id)
         {
             try

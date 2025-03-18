@@ -9,11 +9,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - Admin MEG</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
-      rel="stylesheet"
-    />
+    <title>Detail event - Admin MEG</title>
     <link
       href="assets/library/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
@@ -223,7 +219,7 @@
                     >
                       Hủy
                     </button>
-                    <button
+                    <button id="logout-btn"
                       type="button"
                       class="btn btn-danger"
                       data-bs-dismiss="modal"
@@ -280,6 +276,8 @@
     </div>
     <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+    <script src="js/service/axios-jquery.js"></script>
+    <script src="js/service/logoutService.js"></script>
     <script>
       $(document).ready(function () {
         $("#btnAddImage").click(function () {

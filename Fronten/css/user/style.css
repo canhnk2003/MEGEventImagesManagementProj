@@ -1,0 +1,137 @@
+/* Navbar mặc định */
+.navbar {
+    transition: all 0.3s ease-in-out;
+    background-color: transparent;
+}
+
+/* Khi cuộn xuống, navbar sẽ có nền trắng & bóng đổ */
+.navbar.fixed-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    /* Đảm bảo hiển thị trên cùng */
+}
+
+/* Căn giữa carousel + giảm width */
+.carousel-container {
+    display: flex;
+    justify-content: center;
+}
+
+#demo {
+    width: 80%;
+    max-width: 800px;
+    /* Giới hạn chiều rộng tối đa */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 500px;
+    /* Mặc định cho PC */
+    object-fit: cover;
+}
+#home-section {
+    padding-top: 50px;
+}
+
+#events-section {
+    padding-top: 125px;
+}
+/* Responsive: Giảm chiều cao carousel trên điện thoại */
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 200px;
+    }
+    #home-section {
+        padding-top: 30px;
+    }
+}
+
+.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.fullscreen .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+#btnShowHighLightEvent {
+    border-radius: 50px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    max-height: 80px;
+    /* Đảm bảo logo không quá to */
+    width: auto;
+}
+
+/* Detail event */
+.image-container {
+    display: grid;
+    gap: 10px; /* Khoảng cách giữa các ảnh */
+    grid-template-columns: repeat(6, 1fr); /* Mặc định 8 ảnh/hàng */
+}
+
+.image-container img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px; /* Bo góc ảnh */
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .image-container {
+        grid-template-columns: repeat(5, 1fr); /* 6 ảnh / hàng */
+    }
+}
+@media (max-width: 992px) {
+    .image-container {
+        grid-template-columns: repeat(4, 1fr); /* 4 ảnh / hàng */
+    }
+}
+@media (max-width: 768px) {
+    .image-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 ảnh / hàng */
+    }
+}
+@media (max-width: 576px) {
+    .image-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 ảnh / hàng */
+    }
+    .image-container img{
+        height: 200px;
+    }
+}
+#closeCarousel{
+    z-index: 1051;
+}

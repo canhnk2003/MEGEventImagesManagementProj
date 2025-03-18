@@ -15,14 +15,23 @@
     display: none;
 }
 .image-container img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     margin-right: 10px;
     user-select: none;
     border-radius: 8px;
     border: 2px solid #ddd;
     padding: 5px;
     background: #fff;
+}
+.image-container img:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 768px) {
+  .image-container img{
+    width: 120px;
+    height: 120px;
+  }
 }
 
   /* Image Management */

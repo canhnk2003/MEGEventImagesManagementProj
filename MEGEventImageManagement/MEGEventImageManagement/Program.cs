@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -15,7 +15,12 @@ namespace MEGEventImageManagement
 
             // Add services to the container.
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
@@ -24,22 +29,30 @@ namespace MEGEventImageManagement
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidateLifetime = true,  // ✅ Kiểm tra thời gian hết hạn của Access Token
+                    ClockSkew = TimeSpan.Zero // ✅ Hạn chế thời gian trễ mặc định của JWT (mặc định là 5 phút)
                 };
             });
 
-            // Th�m d?ch v? CORS
+            // Thêm dịch vụ CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
                 {
-                    policy.AllowAnyOrigin()   // Cho ph�p b?t k? ngu?n g?c (origin) n�o
-                          .AllowAnyMethod()   // Cho ph�p t?t c? c�c ph??ng th?c HTTP (GET, POST, PUT, DELETE, v.v.)
-                          .AllowAnyHeader();  // Cho ph�p t?t c? c�c header
+                    policy.AllowAnyOrigin()   // Cho phép bất kể nguồn gốc (origin) nào
+                          .AllowAnyMethod()   // Cho phép tất cả các phương thức HTTP (GET, POST, PUT, DELETE, v.v.)
+                          .AllowAnyHeader();  // Cho phép tất cả các header
                 });
             });
 
             builder.Services.AddAuthentication();
+
+            // ✅ Thêm Authorization vào Services
+            builder.Services.AddAuthorization();
+
+            // ✅ Đăng ký HttpContextAccessor (nếu cần lấy thông tin User từ HttpContext)
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -48,10 +61,10 @@ namespace MEGEventImageManagement
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MEGEventImageManagement API", Version = "v1" });
 
-                // Th�m x�c th?c JWT Bearer Token v�o Swagger
+                // Thêm xác thực JWT Bearer Token vào Swagger
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "Nh?p token v�o � b�n d??i theo ??nh d?ng: Bearer {your_token}",
+                    Description = "Nhập token vào ô bên dưới theo định dạng: Bearer {your_token}",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
@@ -60,19 +73,19 @@ namespace MEGEventImageManagement
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
             var app = builder.Build();
@@ -86,7 +99,7 @@ namespace MEGEventImageManagement
             }
 
             app.UseStaticFiles();
-            // S? d?ng CORS
+            // Sử dụng CORS
             app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();

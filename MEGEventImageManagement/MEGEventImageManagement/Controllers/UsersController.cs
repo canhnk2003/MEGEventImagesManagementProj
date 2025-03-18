@@ -72,14 +72,53 @@ namespace MEGEventImageManagement.Controllers
                     if (user == null || !VerifyPassword(request.Password, user.Password))
                         return Unauthorized("Tên đăng nhập hoặc mật khẩu không chính xác.");
 
-                    string token = GenerateJwtToken(user);
-                    return Ok(new { message = "Đăng nhập thành công", token });
+                    string accessToken = GenerateJwtToken(user);
+                    string refreshToken = GenerateRefreshToken();
+                    // Lưu refresh token vào database
+                    await connection.ExecuteAsync(
+                        "UPDATE UserAdmin SET RefreshToken = @RefreshToken, RefreshTokenExpiry = @Expiry WHERE Id = @UserId",
+                        new { RefreshToken = refreshToken, Expiry = DateTime.UtcNow.AddDays(7), UserId = user.Id });
+
+                    return Ok(new {message = "Đăng nhập thành công!", accessToken, refreshToken });
                 }
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Có lỗi xảy ra! " + ex.Message);
             }
+        }
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenModel model)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var user = await connection.QueryFirstOrDefaultAsync<UserAdmin>(
+                    "SELECT * FROM UserAdmin WHERE RefreshToken = @RefreshToken",
+                    new { model.RefreshToken });
+
+                if (user == null || user.RefreshTokenExpiry < DateTime.UtcNow)
+                    return Unauthorized("Refresh token không hợp lệ hoặc đã hết hạn.");
+
+                string newAccessToken = GenerateJwtToken(user);
+                string newRefreshToken = GenerateRefreshToken();
+
+                // Cập nhật refresh token mới vào database
+                await connection.ExecuteAsync(
+                    "UPDATE UserAdmin SET RefreshToken = @RefreshToken, RefreshTokenExpiry = @Expiry WHERE Id = @UserId",
+                    new { RefreshToken = newRefreshToken, Expiry = DateTime.UtcNow.AddDays(7), UserId = user.Id });
+
+                return Ok(new { accessToken = newAccessToken, refreshToken = newRefreshToken });
+            }
+        }
+
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+            }
+            return Convert.ToBase64String(randomNumber);
         }
 
         /// <summary>

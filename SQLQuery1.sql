@@ -49,6 +49,7 @@ CREATE TABLE DeletedImages (
 );
 
 
+
 -- Thêm dữ liệu vào bảng Event
 INSERT INTO Event (Id, Name, Description, TimeOccurs, Status)
 VALUES 
@@ -74,3 +75,5 @@ SELECT * FROM Image ;
 select * from UserAdmin;
 
 select * from DeletedImages;
+
+ALTER TABLE UserAdmin ADD RefreshToken NVARCHAR(500), RefreshTokenExpiry DATETIME;
