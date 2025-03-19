@@ -123,12 +123,12 @@
               <!-- Ô tìm kiếm bên trái -->
               <div class="col-md-3 col-6">
                 <div class="input-group">
-                  <input
+                  <input id="searchInput"
                     type="text"
                     class="form-control"
                     placeholder="Search for..."
                   />
-                  <button class="btn btn-primary">
+                  <button id="btnSearch" class="btn btn-primary">
                     <i class="fa fa-search"></i>
                     <!-- Biểu tượng tìm kiếm -->
                   </button>
@@ -157,7 +157,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="eventModalLabel">
-                      Thêm Sự Kiện
+                      Thêm sự kiện
                     </h5>
                     <button
                       type="button"
@@ -170,7 +170,7 @@
                     <form>
                       <div class="mb-3">
                         <label class="form-label">Mã sự kiện</label>
-                        <input
+                        <input id="eventId"
                           type="text"
                           class="form-control"
                           placeholder="Nhập mã sự kiện"
@@ -178,7 +178,7 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label">Tên sự kiện</label>
-                        <input
+                        <input id="eventName"
                           type="text"
                           class="form-control"
                           placeholder="Nhập tên sự kiện"
@@ -187,6 +187,7 @@
                       <div class="mb-3">
                         <label class="form-label">Mô tả</label>
                         <input
+                        id="eventDescription"
                           type="text"
                           class="form-control"
                           placeholder="Nhập mô tả sự kiện"
@@ -194,7 +195,7 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label">Ngày diễn ra</label>
-                        <input type="date" class="form-control" />
+                        <input id="timeOccurs" type="date" class="form-control" />
                       </div>
                     </form>
                   </div>
@@ -206,7 +207,7 @@
                     >
                       Đóng
                     </button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
+                    <button id="btnAddEvent" type="button" class="btn btn-primary">Lưu</button>
                   </div>
                 </div>
               </div>
@@ -222,7 +223,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="editEventModalLabel">
-                      Sửa Sự Kiện
+                      Sửa sự kiện
                     </h5>
                     <button
                       type="button"
@@ -235,7 +236,7 @@
                     <form>
                       <div class="mb-3">
                         <label class="form-label">Mã sự kiện</label>
-                        <input
+                        <input id="eventId"
                           type="text"
                           class="form-control"
                           id="editEventId"
@@ -245,7 +246,7 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label">Tên sự kiện</label>
-                        <input
+                        <input id="eventName"
                           type="text"
                           class="form-control"
                           id="editEventName"
@@ -254,7 +255,7 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label">Mô tả</label>
-                        <input
+                        <input id="eventDescription"
                           type="text"
                           class="form-control"
                           id="editEventDesc"
@@ -263,7 +264,7 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label">Ngày diễn ra</label>
-                        <input
+                        <input id="timeOccurs"
                           type="date"
                           class="form-control"
                           id="editEventDate"
@@ -280,7 +281,7 @@
                     >
                       Hủy
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button id="btnUpdateEvent" type="button" class="btn btn-primary">
                       Lưu thay đổi
                     </button>
                   </div>
@@ -319,7 +320,7 @@
                     >
                       Hủy
                     </button>
-                    <button type="button" class="btn btn-danger">Xóa</button>
+                    <button id="btnDeleteEvent" type="button" class="btn btn-danger">Xóa</button>
                   </div>
                 </div>
               </div>
@@ -346,7 +347,8 @@
                     >
                       Hủy
                     </button>
-                    <button id="logout-btn"
+                    <button
+                      id="logout-btn"
                       type="button"
                       class="btn btn-danger"
                       data-bs-dismiss="modal"
@@ -358,7 +360,7 @@
               </div>
             </div>
             <div class="container-fluid mt-4">
-              <div class="row">
+              <div id="eventList" class="row">
                 <!-- Ảnh 1 -->
                 <div class="col-xl-2 col-md-4 col-sm-6 mb-4">
                   <div class="card">
@@ -371,17 +373,40 @@
                       <h5 class="card-title">Event 1</h5>
                       <p class="card-text">Đây là một sự kiện quan trọng</p>
                       <div class="d-flex justify-content-center gap-2">
-                        <a href="detailIamgeEvent.html" class="btn btn-outline-primary btn-sm" title="Xem ảnh">
+                        <a
+                          href="detailIamgeEvent.html"
+                          class="btn btn-outline-primary btn-sm"
+                          title="Xem ảnh"
+                        >
                           <i class="fa-solid fa-eye"></i>
                         </a>
-                        <input id="inputFile" class="d-none" type="file" multiple/>
-                        <button id="btnAddImage" class="btn btn-outline-success btn-sm" title="Thêm ảnh vào sự kiện">
+                        <input
+                          id="inputFile"
+                          class="d-none"
+                          type="file"
+                          multiple
+                        />
+                        <button
+                          id="btnAddImage"
+                          class="btn btn-outline-success btn-sm"
+                          title="Thêm ảnh vào sự kiện"
+                        >
                           <i class="fa-solid fa-plus"></i>
                         </button>
-                        <button class="btn btn-outline-warning btn-sm" title="Sửa thông tin sự kiện" data-bs-toggle="modal" data-bs-target="#editEventModal">
+                        <button
+                          class="btn btn-outline-warning btn-sm"
+                          title="Sửa thông tin sự kiện"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editEventModal"
+                        >
                           <i class="fa-solid fa-pen-to-square"></i>
                         </button>
-                        <button class="btn btn-outline-danger btn-sm" title="Xóa sự kiện" data-bs-toggle="modal" data-bs-target="#deleteEventModal">
+                        <button
+                          class="btn btn-outline-danger btn-sm"
+                          title="Xóa sự kiện"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteEventModal"
+                        >
                           <i class="fa-solid fa-trash-can"></i>
                         </button>
                       </div>
@@ -407,13 +432,7 @@
     <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
     <script src="js/service/axios-jquery.js"></script>
     <script src="js/service/logoutService.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#btnAddImage").click(function () {
-          $("#inputFile").click();
-        });
-      });
-    </script>
+    <script src="js/service/eventManagementService.js"></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>
