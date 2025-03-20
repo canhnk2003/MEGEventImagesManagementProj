@@ -126,12 +126,12 @@
               <!-- Ô tìm kiếm bên trái -->
               <div class="col-md-3 col-6">
                 <div class="input-group">
-                  <input
+                  <input id="searchInput"
                     type="text"
                     class="form-control"
                     placeholder="Search for..."
                   />
-                  <button class="btn btn-primary">
+                  <button id="btnSearch" class="btn btn-primary">
                     <i class="fa fa-search"></i>
                     <!-- Biểu tượng tìm kiếm -->
                   </button>
@@ -145,7 +145,7 @@
                   class="btn btn-danger me-2"
                   id="btnDeleteImage"
                   data-bs-toggle="modal"
-                  data-bs-target="#deleteImageModal" title="Xóa ảnh đã chọn"
+                  data-bs-target="#deleteImageModal" title="Xóa ảnh đã chọn" disabled
                 >
                 <i class="fa-solid fa-trash-can"></i> Xóa
                 </button>
@@ -192,7 +192,7 @@
                     >
                       Hủy
                     </button>
-                    <button type="button" class="btn btn-danger">Xóa</button>
+                    <button id="btnDelete" type="button" class="btn btn-danger">Xóa</button>
                   </div>
                 </div>
               </div>
@@ -232,7 +232,7 @@
             </div>
             <div class="container-fluid mt-4">
               <h2>Event</h2>
-              <div class="row">
+              <div id="listImageByEvent" class="row">
                 <!-- Bắt đầu danh sách ảnh -->
                 <div
                   class="col-xxl-1-5 col-xl-2 col-lg-3 col-md-4 col-sm-6 p-2"
@@ -277,14 +277,8 @@
     <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
     <script src="js/service/axios-jquery.js"></script>
+    <script src="js/service/viewImagesByEventService.js"></script>
     <script src="js/service/logoutService.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#btnAddImage").click(function () {
-          $("#inputFile").click();
-        });
-      });
-    </script>
     <script src="js/scripts.js"></script>
   </body>
 </html>

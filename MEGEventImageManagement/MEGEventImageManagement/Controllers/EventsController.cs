@@ -140,21 +140,53 @@ namespace MEGEventImageManagement.Controllers
                 {
                     return BadRequest(new { message = "Sự kiện SK01 là sự kiện nổi bật không thể bị xóa." });
                 }
+
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    var sql = "DELETE FROM Event WHERE Id = @Id";
-                    var result = await connection.ExecuteAsync(sql, new { Id = id });
+                    await connection.OpenAsync();
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            // Kiểm tra sự kiện có tồn tại không
+                            var checkEventSql = "SELECT COUNT(*) FROM Event WHERE Id = @Id";
+                            var eventExists = await connection.ExecuteScalarAsync<int>(checkEventSql, new { Id = id }, transaction);
 
-                    if (result > 0)
-                        return Ok(new { message = "Xóa sự kiện thành công." });
+                            if (eventExists == 0)
+                            {
+                                return NotFound(new { message = "Không tìm thấy sự kiện để xóa." });
+                            }
 
-                    return NotFound(new { message = "Không tìm thấy sự kiện để xóa." });
+                            // Xóa ảnh liên quan trước
+                            var deleteImagesSql = "DELETE FROM Image WHERE EventId = @Id";
+                            await connection.ExecuteAsync(deleteImagesSql, new { Id = id }, transaction);
+
+                            // Xóa sự kiện
+                            var deleteEventSql = "DELETE FROM Event WHERE Id = @Id";
+                            var result = await connection.ExecuteAsync(deleteEventSql, new { Id = id }, transaction);
+
+                            transaction.Commit();
+
+                            return Ok(new { message = "Xóa sự kiện thành công." });
+                        }
+                        catch (SqlException ex) when (ex.Number == 547) // Lỗi ràng buộc khóa ngoại
+                        {
+                            transaction.Rollback();
+                            return BadRequest(new { message = "Không thể xóa sự kiện vì có dữ liệu liên quan." });
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Có lỗi xảy ra! " + ex.Message);
+                return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
             }
         }
+
     }
 }

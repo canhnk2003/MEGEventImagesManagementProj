@@ -55,7 +55,15 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
           >
-            <li><a class="dropdown-item" href="#!" data-bs-toggle="modal" data-bs-target="#confirmLogout">Đăng xuất</a></li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="#!"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmLogout"
+                >Đăng xuất</a
+              >
+            </li>
           </ul>
         </li>
       </ul>
@@ -136,7 +144,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#deleteImageModal"
                 >
-                <i class="fa-solid fa-trash-can"></i> Xóa
+                  <i class="fa-solid fa-trash-can"></i> Xóa
                 </button>
 
                 <!-- Nút "Thêm mới" -->
@@ -225,7 +233,7 @@
                     >
                       Hủy
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button id="btnAddImage" type="button" class="btn btn-primary">
                       Lưu ảnh
                     </button>
                   </div>
@@ -284,7 +292,8 @@
                     >
                       Hủy
                     </button>
-                    <button id="logout-btn"
+                    <button
+                      id="logout-btn"
                       type="button"
                       class="btn btn-danger"
                       data-bs-dismiss="modal"
@@ -295,31 +304,36 @@
                 </div>
               </div>
             </div>
-            <div class="container-fluid mt-4">
-              <h2>Event</h2>
-              <div class="row">
-                <!-- Bắt đầu danh sách ảnh -->
-                <div
-                  class="col-xxl-1-5 col-xl-2 col-lg-3 col-md-4 col-sm-6 p-2"
-                  v-for="i in 16"
-                >
-                  <div class="card shadow-sm">
-                    <!-- Checkbox để chọn ảnh -->
-                    <input
-                      type="checkbox"
-                      class="select-checkbox"
-                      id="checkbox-{{i}}"
-                    />
-                    <label for="checkbox-{{i}}" class="checkbox-label"></label>
-                    <img
-                      src="assets/img/ad-image-1.png"
-                      class="card-img-top"
-                      alt="Image"
-                    />
-                    <div class="card-body">
-                      <p class="card-text text-start">
-                        Đây là một ảnh quan trọng
-                      </p>
+            <div id="eventContainer">
+              <div id="SK02" class="container-fluid mt-4">
+                <h2>Event</h2>
+                <div class="row">
+                  <!-- Bắt đầu danh sách ảnh -->
+                  <div
+                    class="col-xxl-1-5 col-xl-2 col-lg-3 col-md-4 col-sm-6 p-2"
+                    v-for="i in 16"
+                  >
+                    <div class="card shadow-sm">
+                      <!-- Checkbox để chọn ảnh -->
+                      <input
+                        type="checkbox"
+                        class="select-checkbox"
+                        id="checkbox-{{i}}"
+                      />
+                      <label
+                        for="checkbox-{{i}}"
+                        class="checkbox-label"
+                      ></label>
+                      <img
+                        src="assets/img/ad-image-1.png"
+                        class="card-img-top"
+                        alt="Image"
+                      />
+                      <div class="card-body">
+                        <p class="card-text text-start">
+                          Đây là một ảnh quan trọng
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -343,22 +357,23 @@
     <script src="js/service/axios-jquery.js"></script>
     <script src="js/service/logoutService.js"></script>
     <script>
-      $(document).ready(function () {
-        // Khi chọn file ảnh, hiển thị ảnh xem trước
-        $("#imageFile").change(function () {
-          let file = this.files[0];
-          if (file) {
-            let reader = new FileReader();
-            reader.onload = function (e) {
-              $("#previewImage")
-                .attr("src", e.target.result)
-                .removeClass("d-none");
-            };
-            reader.readAsDataURL(file);
-          }
-        });
-      });
+      // $(document).ready(function () {
+      //   // Khi chọn file ảnh, hiển thị ảnh xem trước
+      //   $("#imageFile").change(function () {
+      //     let file = this.files[0];
+      //     if (file) {
+      //       let reader = new FileReader();
+      //       reader.onload = function (e) {
+      //         $("#previewImage")
+      //           .attr("src", e.target.result)
+      //           .removeClass("d-none");
+      //       };
+      //       reader.readAsDataURL(file);
+      //     }
+      //   });
+      // });
     </script>
+    <script src="js/service/imageManagementService.js"></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>

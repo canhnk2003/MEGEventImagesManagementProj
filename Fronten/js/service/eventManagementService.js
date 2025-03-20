@@ -30,7 +30,7 @@ $(document).ready(function () {
                                         <h5 class="card-title">${event.name}</h5>
                                         <p class="card-text">${event.description}</p>
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href="detailIamgeEvent.html" class="btn btn-outline-primary btn-sm" title="Xem ảnh">
+                                            <a href="detailImageEvent.html?eventId=${event.id}" class="btn btn-outline-primary btn-sm" title="Xem ảnh">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
                                             <button class="btnAddImage btn btn-outline-success btn-sm" title="Thêm ảnh vào sự kiện">
@@ -82,7 +82,6 @@ $(document).ready(function () {
     if (!files || files.length === 0) return;
 
     const eventId = $(this).attr("data-event-id");
-    console.log(eventId);
     const today = new Date().toISOString();
     const formData = new FormData();
     const imagesMetadata = [];
@@ -122,12 +121,67 @@ $(document).ready(function () {
     });
   });
 
-  //Xử lý thêm mới một sự kiện
+  // //Xử lý thêm mới một sự kiện
+  // $("#btnAddEvent").on("click", function () {
+  //   const eventId = $("#eventId").val().trim();
+  //   const eventName = $("#eventName").val().trim();
+  //   const eventDescription = $("#eventDescription").val().trim();
+  //   const time = $("#timeOccurs").val().trim();
+  //   if (!eventId) {
+  //     alert("Vui lòng nhập mã sự kiện.");
+  //     return;
+  //   }
+  //   if (!eventName) {
+  //     alert("Vui lòng nhập tên sự kiện.");
+  //     return;
+  //   }
+  //   if (!time) {
+  //     alert("Vui lòng nhập ngày diễn ra sự kiện.");
+  //     return;
+  //   }
+
+  //   $.ajax({
+  //     url: `${BASE_URL}/api/v1/Events/get/${eventId}`,
+  //     method: "GET",
+  //     success: function (exists) {
+  //       if (exists) {
+  //         alert("Mã sự kiện đã tồn tại. Vui lòng nhập mã khác.");
+  //         return;
+  //       }
+
+  //       const eventData = {
+  //         id: eventId,
+  //         name: eventName,
+  //         description: eventDescription,
+  //         timeOccurs: time,
+  //         status: 0,
+  //       };
+
+  //       $.ajax({
+  //         url: `${BASE_URL}/api/v1/Events/create`,
+  //         method: "POST",
+  //         contentType: "application/json",
+  //         data: JSON.stringify(eventData),
+  //         success: function (response) {
+  //           alert("Sự kiện đã được thêm thành công.");
+  //           location.reload();
+  //         },
+  //         error: function () {
+  //           alert("Lỗi khi thêm sự kiện. Vui lòng thử lại.");
+  //         },
+  //       });
+  //     },
+  //     error: function () {
+  //       alert("Lỗi khi kiểm tra mã sự kiện. Vui lòng thử lại.");
+  //     },
+  //   });
+  // });
   $("#btnAddEvent").on("click", function () {
     const eventId = $("#eventId").val().trim();
     const eventName = $("#eventName").val().trim();
     const eventDescription = $("#eventDescription").val().trim();
     const time = $("#timeOccurs").val().trim();
+
     if (!eventId) {
       alert("Vui lòng nhập mã sự kiện.");
       return;
@@ -141,39 +195,41 @@ $(document).ready(function () {
       return;
     }
 
+    // Kiểm tra sự tồn tại của eventId trước khi thêm
     $.ajax({
       url: `${BASE_URL}/api/v1/Events/get/${eventId}`,
       method: "GET",
-      success: function (exists) {
-        if (exists) {
-          alert("Mã sự kiện đã tồn tại. Vui lòng nhập mã khác.");
-          return;
-        }
-
-        const eventData = {
-          id: eventId,
-          name: eventName,
-          description: eventDescription,
-          timeOccurs: time,
-          status: 0,
-        };
-
-        $.ajax({
-          url: `${BASE_URL}/api/v1/Events/create`,
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(eventData),
-          success: function (response) {
-            alert("Sự kiện đã được thêm thành công.");
-            location.reload();
-          },
-          error: function () {
-            alert("Lỗi khi thêm sự kiện. Vui lòng thử lại.");
-          },
-        });
+      success: function () {
+        alert("Mã sự kiện đã tồn tại. Vui lòng nhập mã khác.");
       },
-      error: function () {
-        alert("Lỗi khi kiểm tra mã sự kiện. Vui lòng thử lại.");
+      error: function (xhr) {
+        if (xhr.status === 404) {
+          // Nếu không tìm thấy (404), tiếp tục tạo sự kiện
+          const eventData = {
+            id: eventId,
+            name: eventName,
+            description: eventDescription,
+            timeOccurs: time,
+            status: 0,
+          };
+
+          $.ajax({
+            url: `${BASE_URL}/api/v1/Events/create`,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(eventData),
+            success: function () {
+              alert("Sự kiện đã được thêm thành công.");
+              location.reload();
+            },
+            error: function () {
+              alert("Lỗi khi thêm sự kiện. Vui lòng thử lại.");
+            },
+          });
+        } else {
+          // Nếu lỗi khác 404, thông báo lỗi chung
+          alert("Lỗi khi kiểm tra mã sự kiện. Vui lòng thử lại.");
+        }
       },
     });
   });
@@ -255,19 +311,17 @@ $(document).ready(function () {
     });
   });
   // Xử lý tìm kiếm sự kiện
-  // Xử lý tìm kiếm sự kiện
-$("#btnSearch").on("click", function () {
+  $("#btnSearch").on("click", function () {
     const searchText = $("#searchInput").val().trim().toLowerCase();
-    
-    $(".eventItem").each(function () {
-        const eventName = $(this).find(".card-title").text().trim().toLowerCase();
-        const eventDescription = $(this).find(".card-text").text().trim().toLowerCase();
 
-        if (eventName.includes(searchText) || eventDescription.includes(searchText)) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
+    $(".eventItem").each(function () {
+      const eventName = $(this).find(".card-title").text().trim().toLowerCase();
+      const eventDes = $(this).find(".card-text").text().trim().toLowerCase();
+      if (eventName.includes(searchText) || eventDes.includes(searchText)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
     });
-});
+  });
 });
