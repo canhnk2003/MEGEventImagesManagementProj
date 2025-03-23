@@ -1,0 +1,50 @@
+/* Detail event */
+.image-container img {
+    width: 100%;
+    /* Chiếm toàn bộ khung */
+    height: 200px;
+    /* Đặt chiều cao cố định */
+    object-fit: cover;
+    /* Cắt ảnh để lấp đầy khung mà không bị méo */
+    border-radius: 8px;
+    /* Bo góc nhẹ */
+    transition: transform 0.3s ease-in-out;
+    /* Hiệu ứng phóng to */
+}
+
+.image-container img:hover {
+    transform: scale(1.05);
+    /* Phóng to nhẹ khi hover */
+}
+
+
+@media (max-width: 576px) {
+
+    /* Dành cho màn hình nhỏ */
+    #lightbox .modal-dialog {
+        margin: 0 auto;
+        /* Đảm bảo modal nằm chính giữa */
+        max-width: 90%;
+        /* Giới hạn chiều rộng để không tràn */
+    }
+
+    #lightbox .modal-content {
+        text-align: center;
+        /* Căn giữa nội dung */
+    }
+
+    #prev-btn,
+    #next-btn {
+        width: 40px;
+        /* Giảm kích thước nút điều hướng */
+        height: 40px;
+        font-size: 1rem;
+        padding: 5px;
+    }
+
+    .btn-close {
+        right: 10px !important;
+        /* Đảm bảo nút đóng không bị lệch */
+        top: 10px !important;
+    }
+}

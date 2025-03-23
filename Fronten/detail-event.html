@@ -17,11 +17,18 @@
     <link href="assets/library/bootstrap-icons/bootstrap-icons.min.css" />
     <link href="assets/library/fontawesome-free/css/fontawesome.min.css" />
     <link href="css/user/style.css" rel="stylesheet" />
-    <!-- <link href="css/admin/content.css" rel="stylesheet" /> -->
+    <link href="css/user/detail-event-style.css" rel="stylesheet" />
     <script
       src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
       crossorigin="anonymous"
     ></script>
+    <style>
+      .form-select,
+      #present-btn {
+        height: 38px;
+        min-width: 120px;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -70,67 +77,183 @@
           <h3>Event</h3>
           <p>Description Event</p>
         </div>
-        <div>
-          <button class="btn btn-primary">Present Event</button>
+        <div class="d-flex">
+          <select id="timeSelect" class="form-select me-3" title="Chọn thời gian delay ảnh chạy">
+            <option value="">Time delay</option>
+            <option value="1">1s</option>
+            <option value="2">2s</option>
+            <option value="3">3s</option>
+            <option value="4">4s</option>
+            <option value="5">5s</option>
+            <option value="6">6s</option>
+            <option value="7">7s</option>
+          </select>
+          <button id="present-btn" class="btn btn-success">Present Event</button>
         </div>
       </div>
-      <div class="container-fluid mt-4 px-5">
-        <div class="image-container">
-          <img src="assets/img/1.jpg" alt="Image 1" />
-          <img src="assets/img/2.jpg" alt="Image 1" />
-          <img src="assets/img/3.jpg" alt="Image 1" />
-          <img src="assets/img/1.jpg" alt="Image 1" />
-          <img src="assets/img/2.jpg" alt="Image 1" />
-          <img src="assets/img/3.jpg" alt="Image 1" />
-          <img src="assets/img/1.jpg" alt="Image 1" />
-          <img src="assets/img/2.jpg" alt="Image 1" />
-          <img src="assets/img/3.jpg" alt="Image 1" />
-          <img src="assets/img/1.jpg" alt="Image 1" />
-          <img src="assets/img/2.jpg" alt="Image 1" />
-          <img src="assets/img/3.jpg" alt="Image 1" />
-          <img src="assets/img/1.jpg" alt="Image 1" />
-          <img src="assets/img/2.jpg" alt="Image 1" />
-          <img src="assets/img/3.jpg" alt="Image 1" />
+      <div class="container mt-4">
+        <div id="listImageByEvent" class="row g-3 image-container">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/1.jpg" class="img-fluid" alt="Image 1" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/2.jpg" class="img-fluid" alt="Image 2" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/3.jpg" class="img-fluid" alt="Image 3" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/1.jpg" class="img-fluid" alt="Image 4" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/2.jpg" class="img-fluid" alt="Image 5" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/3.jpg" class="img-fluid" alt="Image 6" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/1.jpg" class="img-fluid" alt="Image 7" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/2.jpg" class="img-fluid" alt="Image 8" />
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <img src="assets/img/3.jpg" class="img-fluid" alt="Image 9" />
+          </div>
         </div>
       </div>
     </div>
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered d-flex justify-content-center"
+      >
+        <div class="modal-content text-white">
+          <div class="modal-body position-relative text-center">
+            <!-- Ảnh -->
+            <img
+              id="lightbox-img"
+              class="img-fluid rounded"
+              src=""
+              alt="Full Image"
+            />
+
+            <!-- Nút đóng -->
+            <button
+              type="button"
+              class="btn-close position-absolute top-0 end-0 m-3 bg-danger p-2"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+
+            <!-- Nút điều hướng -->
+            <button
+              id="prev-btn"
+              class="btn btn-light position-absolute start-0 top-50 translate-middle-y"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button
+              id="next-btn"
+              class="btn btn-light position-absolute end-0 top-50 translate-middle-y"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Carousel Fullscreen (Ẩn mặc định) -->
-<div id="fullscreen-carousel" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex align-items-center justify-content-center">
-  <div class="position-relative w-100 h-100">
-      <div id="eventCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+    <div
+      id="fullscreen-carousel"
+      class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex align-items-center justify-content-center"
+    >
+      <div class="position-relative w-100 h-100">
+        <div
+          id="eventCarousel"
+          class="carousel slide h-100"
+          data-bs-ride="carousel"
+        >
           <!-- Indicators -->
           <div class="carousel-indicators">
-              <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#eventCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button
+              type="button"
+              data-bs-target="#eventCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#eventCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#eventCarousel"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
           </div>
           <div class="carousel-inner h-100">
-              <div class="carousel-item active h-100">
-                  <img src="assets/img/1.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Slide 1">
-              </div>
-              <div class="carousel-item h-100">
-                  <img src="assets/img/2.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Slide 2">
-              </div>
-              <div class="carousel-item h-100">
-                  <img src="assets/img/3.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Slide 3">
-              </div>
+            <div class="carousel-item active h-100">
+              <img
+                src="assets/img/1.jpg"
+                class="d-block w-100 h-100 object-fit-cover"
+                alt="Slide 1"
+              />
+            </div>
+            <div class="carousel-item h-100">
+              <img
+                src="assets/img/2.jpg"
+                class="d-block w-100 h-100 object-fit-cover"
+                alt="Slide 2"
+              />
+            </div>
+            <div class="carousel-item h-100">
+              <img
+                src="assets/img/3.jpg"
+                class="d-block w-100 h-100 object-fit-cover"
+                alt="Slide 3"
+              />
+            </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#eventCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#eventCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
           </button>
+        </div>
+        <button
+          id="closeCarousel"
+          class="btn btn-danger position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-center"
+          style="width: 35px; height: 35px; font-size: 1.5rem"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <button id="closeCarousel" class="btn btn-danger position-absolute top-0 end-0 m-3 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; font-size: 1.5rem;">
-        <i class="fa-solid fa-xmark"></i>
-    </button>
-  </div>
-</div>
+    </div>
     <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+    <script src="js/service/axios-jquery.js"></script>
+    <script src="js/service/viewDetailEventService.js"></script>
+    <script src="js/service/fullScreenCarouselService.js"></script>
     <script>
       $(document).ready(function () {
         let navbar = $(".navbar");
@@ -141,23 +264,6 @@
           } else {
             navbar.removeClass("fixed-nav");
           }
-        });
-        $(".highlight-btn, .show-event-btn").click(function () {
-          $("#fullscreen-carousel").removeClass("d-none");
-        });
-        $(".close-btn").click(function () {
-          $("#fullscreen-carousel").addClass("d-none");
-        });
-        // Hiển thị carousel khi nhấn nút "Present Event"
-        $(".btn-primary").click(function () {
-            $("#fullscreen-carousel").removeClass("d-none");
-            $("body").css("overflow", "hidden"); // Ngăn cuộn trang khi carousel hiển thị
-        });
-        
-        // Đóng carousel khi nhấn nút "Close"
-        $("#closeCarousel").click(function () {
-            $("#fullscreen-carousel").addClass("d-none");
-            $("body").css("overflow", "auto"); // Cho phép cuộn lại sau khi đóng
         });
       });
     </script>

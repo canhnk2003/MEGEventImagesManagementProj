@@ -25,6 +25,7 @@ namespace MEGEventImageManagement.Model
         [ForeignKey("Event")]
         [Column(TypeName = "nvarchar(50)")]
         public string EventId { get; set; }
+        public string? EventName { get; set; } // 🟢 Thêm tên sự kiện
 
         // Navigation property
         public Event? Event { get; set; }

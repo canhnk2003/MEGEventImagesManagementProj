@@ -46,6 +46,12 @@ namespace MEGEventImageManagement
                 });
             });
 
+            //Cho phép upload file tối đa 150 MB
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Limits.MaxRequestBodySize = 157286400; // 150MB
+            });
+
             builder.Services.AddAuthentication();
 
             // ✅ Thêm Authorization vào Services
@@ -90,23 +96,36 @@ namespace MEGEventImageManagement
 
             var app = builder.Build();
 
+            // ✅ Đặt CORS ngay sau UseRouting()
+            app.UseRouting();
+            app.UseCors("AllowAll");
+
+            // ✅ Cho phép truy cập ảnh từ thư mục tĩnh `/uploads`
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*"); // ✅ Bật CORS cho file tĩnh
+                }
+            });
+
+            // ✅ Authentication & Authorization
             app.UseAuthentication();
-            // Configure the HTTP request pipeline.
+            app.UseAuthorization();
+
+            
+
+            // ✅ Cấu hình Swagger UI chỉ trong môi trường Development
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseStaticFiles();
-            // Sử dụng CORS
-            app.UseCors("AllowAll");
-
+            // ✅ Bật HTTPS Redirect
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-
-
+            // ✅ Map API Controllers
             app.MapControllers();
 
             app.Run();

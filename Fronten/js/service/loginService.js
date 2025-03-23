@@ -29,6 +29,7 @@ $(document).ready(function () {
                     // Lưu token vào localStorage
                     localStorage.setItem("accessToken", response.accessToken);
                     localStorage.setItem("refreshToken", response.refreshToken);
+                    localStorage.setItem("username", username);
 
                     //alert("Đăng nhập thành công!");
                     window.location.href = "index.html"; // Chuyển hướng sau khi login

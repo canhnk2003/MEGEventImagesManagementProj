@@ -91,12 +91,6 @@
                 </div>
                 Quản lý sự kiện
               </a>
-              <a class="nav-link" href="imageManagement.html">
-                <div class="sb-nav-link-icon">
-                  <i class="fa-solid fa-images"></i>
-                </div>
-                Quản lý ảnh MEG
-              </a>
 
               <div class="sb-sidenav-menu-heading">Personal</div>
               <a class="nav-link" href="change-password.html">
@@ -126,7 +120,8 @@
               <!-- Ô tìm kiếm bên trái -->
               <div class="col-md-3 col-6">
                 <div class="input-group">
-                  <input id="searchInput"
+                  <input
+                    id="searchInput"
                     type="text"
                     class="form-control"
                     placeholder="Search for..."
@@ -145,17 +140,19 @@
                   class="btn btn-danger me-2"
                   id="btnDeleteImage"
                   data-bs-toggle="modal"
-                  data-bs-target="#deleteImageModal" title="Xóa ảnh đã chọn" disabled
+                  data-bs-target="#deleteImageModal"
+                  title="Xóa ảnh đã chọn"
+                  disabled
                 >
-                <i class="fa-solid fa-trash-can"></i> Xóa
+                  <i class="fa-solid fa-trash-can"></i> Xóa
                 </button>
 
                 <!-- Nút "Thêm mới" -->
-                 <input id="inputFile" class="d-none" type="file" multiple/>
-                <button id="btnAddImage"
+                <input id="inputFile" class="d-none" type="file" multiple />
+                <button
+                  id="btnAddImage"
                   class="btn btn-success"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addImageModal" title="Thêm ảnh vào sự kiện"
+                  title="Thêm ảnh vào sự kiện"
                 >
                   <i class="fa-solid fa-plus"></i> Thêm mới
                 </button>
@@ -192,7 +189,9 @@
                     >
                       Hủy
                     </button>
-                    <button id="btnDelete" type="button" class="btn btn-danger">Xóa</button>
+                    <button id="btnDelete" type="button" class="btn btn-danger">
+                      Xóa
+                    </button>
                   </div>
                 </div>
               </div>
@@ -219,12 +218,40 @@
                     >
                       Hủy
                     </button>
-                    <button id="logout-btn"
+                    <button
+                      id="logout-btn"
                       type="button"
                       class="btn btn-danger"
                       data-bs-dismiss="modal"
                     >
                       Đăng xuất
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal hiển thị ảnh phóng to -->
+            <div id="imageModal" class="modal fade" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Xem ảnh</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                    ></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid" alt="Image" />
+                    <p id="modalDescription" class="mt-2"></p>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-between">
+                    <button id="prevImage" class="btn btn-secondary">
+                      Prev
+                    </button>
+                    <button id="nextImage" class="btn btn-secondary">
+                      Next
                     </button>
                   </div>
                 </div>
@@ -255,7 +282,6 @@
                       <p class="card-text text-start">
                         Đây là một ảnh quan trọng
                       </p>
-                      
                     </div>
                   </div>
                 </div>

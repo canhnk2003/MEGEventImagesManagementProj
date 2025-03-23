@@ -16,6 +16,11 @@
     /* Đảm bảo hiển thị trên cùng */
 }
 
+/* Chế độ trình chiếu */
+#fullscreen-carousel {
+    z-index: 1001;
+}
+
 /* Căn giữa carousel + giảm width */
 .carousel-container {
     display: flex;
@@ -34,6 +39,7 @@
     /* Mặc định cho PC */
     object-fit: cover;
 }
+
 #home-section {
     padding-top: 50px;
 }
@@ -41,39 +47,60 @@
 #events-section {
     padding-top: 125px;
 }
-/* Responsive: Giảm chiều cao carousel trên điện thoại */
-@media (max-width: 768px) {
-    .carousel-item img {
-        height: 200px;
-    }
-    #home-section {
-        padding-top: 30px;
-    }
-}
 
-.fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1050;
-}
-
-.fullscreen .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: red;
-    color: white;
-    border: none;
-    padding: 10px;
+/* Trang chủ */
+.card {
     cursor: pointer;
 }
+
+.card:hover {
+    scale: 1.05;
+}
+
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Tùy chỉnh 4 cột trên màn hình lớn */
+@media (min-width: 1400px) {
+    .col-xxl-1-5 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* Đảm bảo tất cả card có cùng chiều cao */
+.image-item .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Chiều cao cố định cho tất cả card */
+}
+
+/* Đảm bảo phần nội dung card cũng co giãn theo chiều cao */
+.image-item .card-body {
+    flex-grow: 1;
+    /* Tự động co giãn để chiếm đủ không gian */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Giới hạn chiều cao mô tả ảnh */
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Giới hạn tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    max-height: 3rem;
+    /* Điều chỉnh chiều cao tối đa */
+}
+
 
 .navbar-toggler {
     border: none;
@@ -94,44 +121,108 @@
     width: auto;
 }
 
-/* Detail event */
-.image-container {
-    display: grid;
-    gap: 10px; /* Khoảng cách giữa các ảnh */
-    grid-template-columns: repeat(6, 1fr); /* Mặc định 8 ảnh/hàng */
-}
-
-.image-container img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px; /* Bo góc ảnh */
-}
-
 /* Responsive */
 @media (max-width: 1200px) {
-    .image-container {
-        grid-template-columns: repeat(5, 1fr); /* 6 ảnh / hàng */
+    .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
     }
 }
+
 @media (max-width: 992px) {
-    .image-container {
-        grid-template-columns: repeat(4, 1fr); /* 4 ảnh / hàng */
+    .carousel-item img {
+        height: 200px;
+    }
+
+    .card img {
+        height: 120px;
     }
 }
+
 @media (max-width: 768px) {
-    .image-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 ảnh / hàng */
+    .carousel-item img {
+        height: 200px;
     }
-}
-@media (max-width: 576px) {
-    .image-container {
-        grid-template-columns: repeat(1, 1fr); /* 1 ảnh / hàng */
+
+    #home-section {
+        padding-top: 30px;
     }
-    .image-container img{
+
+    .card img {
         height: 200px;
     }
 }
-#closeCarousel{
-    z-index: 1051;
+
+@media (max-width: 576px) {
+
+    /* Dành cho màn hình nhỏ */
+    #lightbox .modal-dialog {
+        margin: 0 auto;
+        /* Đảm bảo modal nằm chính giữa */
+        max-width: 90%;
+        /* Giới hạn chiều rộng để không tràn */
+    }
+
+    #lightbox .modal-content {
+        text-align: center;
+        /* Căn giữa nội dung */
+    }
+
+    #prev-btn,
+    #next-btn {
+        width: 40px;
+        /* Giảm kích thước nút điều hướng */
+        height: 40px;
+        font-size: 1rem;
+        padding: 5px;
+    }
+
+    .btn-close {
+        right: 10px !important;
+        /* Đảm bảo nút đóng không bị lệch */
+        top: 10px !important;
+    }
+}
+
+#closeCarousel {
+    z-index: 9999 !important;
+}
+
+/* Chế độ xem ảnh */
+/* Tăng chiều cao modal */
+.modal-dialog {
+    max-width: 80vw;
+    /* Độ rộng tối đa */
+}
+
+.modal-content {
+    height: 80vh;
+    /* Tăng chiều cao modal */
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Ảnh hiển thị lớn hơn */
+.modal-body img {
+    max-height: 85vh;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Căn chỉnh nút prev / next */
+.btn-light {
+    font-size: 1.5rem;
+    padding: 10px;
+    opacity: 0.8;
+    border-radius: 50%;
+}
+
+.btn-light:hover {
+    opacity: 1;
 }

@@ -27,7 +27,11 @@ namespace MEGEventImageManagement.Controllers
                     var sql = "SELECT * FROM Event";
                     var events = await connection.QueryAsync<Event>(sql);
 
-                    return Ok(events);
+                    var groupedEvents = events.GroupBy(e => e.TimeOccurs.Year)
+                        .OrderByDescending(g => g.Key)
+                        .ToDictionary(g => g.Key, g => g.ToList());
+
+                    return Ok(groupedEvents);
                 }
             }
             catch (Exception ex)
@@ -136,11 +140,6 @@ namespace MEGEventImageManagement.Controllers
         {
             try
             {
-                if (id == "SK01")
-                {
-                    return BadRequest(new { message = "Sự kiện SK01 là sự kiện nổi bật không thể bị xóa." });
-                }
-
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     await connection.OpenAsync();

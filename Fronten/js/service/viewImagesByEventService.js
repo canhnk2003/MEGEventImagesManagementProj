@@ -1,6 +1,6 @@
 $(document).ready(function () {
   const baseImageUrl = `${BASE_URL}/uploads/`; // Đường dẫn thư mục chứa ảnh
-
+  let imagesList = []; // Mảng lưu danh sách ảnh
   // Hàm lấy tham số từ URL
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -31,37 +31,60 @@ $(document).ready(function () {
     url: `${BASE_URL}/api/v1/Images/getbyevent/${eventId}`,
     method: "GET",
     dataType: "json",
-    success: function (images) {
+    success: function (imagesByYear) {
       const imageContainer = $("#listImageByEvent");
       imageContainer.empty();
-
-      if (images.length === 0) {
+      imagesList = []; // Reset danh sách ảnh
+      if (Object.keys(imagesByYear).length === 0) {
         imageContainer.html(
           `<img src="assets/img/default.png" class="text-center w-25"/>`
         );
         return;
       }
 
-      images.forEach((image, index) => {
-        const imageItem = `
+      // 🔹 Hiển thị ảnh theo năm
+      Object.keys(imagesByYear)
+        .sort((a, b) => b - a) // Sắp xếp năm giảm dần
+        .forEach((year) => {
+          const yearId = `year-${year}`; // Tạo ID duy nhất cho mỗi năm
+          const yearSection = `
+        <div class="year-section">
+          <h4 class="year-title m-3 ms-0">${year}</h4>
+          <div id="${yearId}" class="row images-container"></div>
+        </div>`;
+          imageContainer.append(yearSection);
+
+          const imagesRow = $(`#${yearId}`); // Lấy đúng container theo ID
+
+          imagesByYear[year].forEach((image, index) => {
+            const imgSrc = `${baseImageUrl}${image.path}`;
+
+            // 🟢 Thêm ảnh vào danh sách `imagesList`
+            imagesList.push({
+              id: image.id,
+              src: imgSrc,
+              description: image.description || "Không có mô tả",
+            });
+            const imageItem = `
             <div id="${
               image.id
             }" class="image-item col-xxl-1-5 col-xl-2 col-lg-3 col-md-4 col-sm-6 p-2">
-                <div class="card shadow-sm">
-                    <input type="checkbox" class="select-checkbox" id="checkbox-${index}" />
-                    <label for="checkbox-${index}" class="checkbox-label"></label>
-                    <img src="${baseImageUrl}${
-          image.path
-        }" class="card-img-top" alt="Image"/>
+                <div class="card shadow-sm" data-id="${image.id}">
+                    <input type="checkbox" class="select-checkbox" id="checkbox-${year}-${index}" />
+                    <label for="checkbox-${year}-${index}" class="checkbox-label"></label>
+
+                    <img src="${imgSrc}" class="card-img-top" alt="Image"/>
+
                     <div class="card-body">
-                        <p class="card-text text-start">${
-                          image.description || "Không có mô tả"
-                        }</p>
+                        <p class="card-text text-start description">
+                          ${image.description || "Không có mô tả"}
+                        </p>
                     </div>
                 </div>
             </div>`;
-        imageContainer.append(imageItem);
-      });
+            imagesRow.append(imageItem);
+          });
+        });
     },
     error: function () {
       alert("Lỗi khi tải danh sách ảnh.");
@@ -184,7 +207,7 @@ $(document).ready(function () {
       contentType: "application/json",
       data: JSON.stringify(selectedImages), // Truyền danh sách ID ảnh
       success: function (response) {
-        
+        alert("Xóa ảnh thành công!");
         //Tải lại trang
         location.reload();
 
@@ -196,5 +219,52 @@ $(document).ready(function () {
         alert("Lỗi khi xóa ảnh. Vui lòng thử lại.");
       },
     });
+  });
+
+  //Xử lý khi nhấn vào 1 ảnh để xem
+
+  let currentIndex = 0; // Vị trí ảnh hiện tại
+
+  // 🔹 Xử lý khi nhấn vào ảnh để xem trong modal
+  $(document).on("click", ".image-item img", function () {
+    const imgId = $(this).closest(".card").data("id"); // 🟢 Lấy đúng data-id từ .card
+    console.log("🟢 Clicked Image ID:", imgId);
+
+    currentIndex = imagesList.findIndex((img) => img.id == imgId);
+    console.log("🔹 Lightbox Index:", currentIndex);
+
+    if (currentIndex !== -1) {
+      showImage(currentIndex);
+      $("#imageModal").modal("show");
+    }
+  });
+
+  // 🔹 Hiển thị ảnh trong modal
+  function showImage(index) {
+    const image = imagesList[index];
+    if (!image) return;
+
+    $("#modalImage").attr("src", image.src);
+    $("#modalDescription").text(image.description);
+
+    // Vô hiệu hóa nút nếu đến đầu/cuối danh sách
+    $("#prevImage").prop("disabled", index === 0);
+    $("#nextImage").prop("disabled", index === imagesList.length - 1);
+  }
+
+  // 🔹 Xử lý nút Next
+  $("#nextImage").on("click", function () {
+    if (currentIndex < imagesList.length - 1) {
+      currentIndex++;
+      showImage(currentIndex);
+    }
+  });
+
+  // 🔹 Xử lý nút Prev
+  $("#prevImage").on("click", function () {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showImage(currentIndex);
+    }
   });
 });

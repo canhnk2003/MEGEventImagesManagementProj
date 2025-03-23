@@ -1,116 +1,172 @@
 {
   "Files": [
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2023_SK04_d5c446d8-2993-4e27-8ab4-a61f419fdc6f.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2023_SK04_d5c446d8-2993-4e27-8ab4-a61f419fdc6f.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2023_SK04_577a8a48-9265-4e58-be8c-b16da2f1e688.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2023_SK04_577a8a48-9265-4e58-be8c-b16da2f1e688.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2023_SK04_f64e2bc6-bb63-404b-ba99-94204428e95b.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2023_SK04_f64e2bc6-bb63-404b-ba99-94204428e95b.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2023_SK04_dde285fb-3487-40b3-96c8-97ae9cd6b9bb.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2023_SK04_dde285fb-3487-40b3-96c8-97ae9cd6b9bb.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK01_230fd66b-dc96-403a-8132-c1db14d751e5.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2024_SK01_230fd66b-dc96-403a-8132-c1db14d751e5.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK02_311a5507-30e9-413f-83d7-c6db03491968.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2024_SK02_311a5507-30e9-413f-83d7-c6db03491968.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK01_37d6ebb9-9e4c-4fb4-9c63-6d766483ffba.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2024_SK01_37d6ebb9-9e4c-4fb4-9c63-6d766483ffba.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK03_5d75f78f-644c-4281-be2a-15fc60571da8.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2024_SK03_5d75f78f-644c-4281-be2a-15fc60571da8.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK02_0caa4612-2e3d-4846-a5f3-a278a943787f.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2024_SK02_0caa4612-2e3d-4846-a5f3-a278a943787f.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK03_be537228-d78e-4180-917c-90554db43469.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2024_SK03_be537228-d78e-4180-917c-90554db43469.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK03_07484da4-4d65-4029-aaf5-f8eba003878f.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2024_SK03_07484da4-4d65-4029-aaf5-f8eba003878f.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK03_d62592c9-bcd5-41d2-825f-40df8e473cd4.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2024_SK03_d62592c9-bcd5-41d2-825f-40df8e473cd4.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK03_4517a067-ada1-4d90-80a7-93997a0bdcb6.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2024_SK03_4517a067-ada1-4d90-80a7-93997a0bdcb6.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_00240da6-ceec-4e95-8d3f-107bb03f2936.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_00240da6-ceec-4e95-8d3f-107bb03f2936.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2024_SK03_eeed7a08-7731-4520-82ac-04d9cb63349d.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2024_SK03_eeed7a08-7731-4520-82ac-04d9cb63349d.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_091d3e8f-7f5e-4574-9743-c8a1bd2ac69d.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_091d3e8f-7f5e-4574-9743-c8a1bd2ac69d.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_94dd08f3-e26d-4950-8774-cdff279ff110.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK02_94dd08f3-e26d-4950-8774-cdff279ff110.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_0d5d6f67-dfa5-4f95-ab70-c35e462df788.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_0d5d6f67-dfa5-4f95-ab70-c35e462df788.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_bfea7c8d-05c4-413b-b303-216302ca698f.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK02_bfea7c8d-05c4-413b-b303-216302ca698f.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_31a09b9c-45c4-4d9e-86a9-85001dd76b44.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_31a09b9c-45c4-4d9e-86a9-85001dd76b44.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_dde0f1c9-0c4c-4d38-ae69-545f67461e5a.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK02_dde0f1c9-0c4c-4d38-ae69-545f67461e5a.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_47107091-7f6c-41e8-9fab-b46c64b7717c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_47107091-7f6c-41e8-9fab-b46c64b7717c.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_e6281dea-a2b3-4349-b300-e42053310015.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK02_e6281dea-a2b3-4349-b300-e42053310015.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_981460b5-0369-4617-9c19-a55060c80620.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_981460b5-0369-4617-9c19-a55060c80620.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_04af3a8e-01f0-4dcf-a856-d7ea9ebe5903.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK03_04af3a8e-01f0-4dcf-a856-d7ea9ebe5903.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_9a7232bc-5911-4f0b-ad3a-6ef94e79504e.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_9a7232bc-5911-4f0b-ad3a-6ef94e79504e.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_261dec99-c027-4933-affa-7d3a05cc05a5.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK03_261dec99-c027-4933-affa-7d3a05cc05a5.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_a1ea9073-92bd-47bc-ba7a-6da5c0d16ee1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_a1ea9073-92bd-47bc-ba7a-6da5c0d16ee1.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_4e894e22-b81d-4f26-91c7-08a7c442814b.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK03_4e894e22-b81d-4f26-91c7-08a7c442814b.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_a300d546-8cf7-4378-b0ca-9774f272a8bc.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_a300d546-8cf7-4378-b0ca-9774f272a8bc.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_751cc330-c2c4-489b-8acb-ba5df36f99aa.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK03_751cc330-c2c4-489b-8acb-ba5df36f99aa.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_c9f85c4b-0f17-4d7d-afd7-303b69956b9f.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_c9f85c4b-0f17-4d7d-afd7-303b69956b9f.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_afc36f9c-b0ca-4f2a-b9cd-744b9374ef27.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK03_afc36f9c-b0ca-4f2a-b9cd-744b9374ef27.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_cd07dbcc-9911-4a76-a6bb-99724783d8b0.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_cd07dbcc-9911-4a76-a6bb-99724783d8b0.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_e90769d4-9e28-405c-9641-0ce4c79169aa.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK03_e90769d4-9e28-405c-9641-0ce4c79169aa.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_e74f4980-43b0-4256-ad9b-2bb5660d8d6f.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_e74f4980-43b0-4256-ad9b-2bb5660d8d6f.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK04_c3cefa02-a503-4a35-a61d-d6f57c99310d.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK04_c3cefa02-a503-4a35-a61d-d6f57c99310d.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK01_e7ff1f33-375d-4605-8899-a620fb70169e.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK01_e7ff1f33-375d-4605-8899-a620fb70169e.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK05_12797972-d5ce-4946-9586-4876f01dba93.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK05_12797972-d5ce-4946-9586-4876f01dba93.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_35751ef0-8b63-46e5-b2d8-c9e9f7cab5c5.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK02_35751ef0-8b63-46e5-b2d8-c9e9f7cab5c5.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK05_590e22f7-f4de-4c7c-bc72-ad5063df2b18.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK05_590e22f7-f4de-4c7c-bc72-ad5063df2b18.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_ea764f56-8bf3-4bae-bd29-48d08eb92e3c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK02_ea764f56-8bf3-4bae-bd29-48d08eb92e3c.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK05_bad5383e-c0ed-4396-b17e-285e9ca6c68f.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK05_bad5383e-c0ed-4396-b17e-285e9ca6c68f.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK02_ec5c90a8-7c68-46ac-9464-8149f68c9ffc.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK02_ec5c90a8-7c68-46ac-9464-8149f68c9ffc.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK05_c40af297-92c4-4e4b-bf79-e8d5faf8fdb6.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK05_c40af297-92c4-4e4b-bf79-e8d5faf8fdb6.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_19cb5de7-aea5-43cd-8397-9f5da6f324df.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK03_19cb5de7-aea5-43cd-8397-9f5da6f324df.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK05_d7e4b70c-0eb7-4ba0-aa75-db10690eeb52.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK05_d7e4b70c-0eb7-4ba0-aa75-db10690eeb52.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_b75c3937-3fb1-431c-9e81-8c4a8a9732a0.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK03_b75c3937-3fb1-431c-9e81-8c4a8a9732a0.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK1_c2e45426-e56a-4d5f-ba01-e7a4d8ca4a21.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK1_c2e45426-e56a-4d5f-ba01-e7a4d8ca4a21.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK03_d2a8c0c2-cf2f-47b4-9edf-2a9274217a6d.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK03_d2a8c0c2-cf2f-47b4-9edf-2a9274217a6d.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK1_ea079c78-7924-44a6-be6b-ea26c93cae3a.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK1_ea079c78-7924-44a6-be6b-ea26c93cae3a.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK04_c53fcc08-1dbe-46e9-89e5-1f1cf0e20e58.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025_SK04_c53fcc08-1dbe-46e9-89e5-1f1cf0e20e58.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK2_53f741a4-a967-4603-b848-27d422398cfe.jpg"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__02610a14-5f12-4769-8abe-0e576ad2ad6e.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__02610a14-5f12-4769-8abe-0e576ad2ad6e.jpg"
     },
     {
-      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025_SK2_9513bf0b-3633-485d-9ea3-f0c67334215d.gif",
-      "PackagePath": "staticwebassets\\uploads\\2025_SK2_9513bf0b-3633-485d-9ea3-f0c67334215d.gif"
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__15483279-82e4-4a29-9982-2ed332d5fc35.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__15483279-82e4-4a29-9982-2ed332d5fc35.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__1a8412c6-a198-495c-a2fc-3f926573ee97.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__1a8412c6-a198-495c-a2fc-3f926573ee97.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__20c790b5-f995-49b9-a63f-67b597ca87b5.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__20c790b5-f995-49b9-a63f-67b597ca87b5.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__235ea11c-3a1f-45eb-a7bc-733ed4993299.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__235ea11c-3a1f-45eb-a7bc-733ed4993299.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__246e6009-79e3-4383-80e8-c7cf3ca7c01c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__246e6009-79e3-4383-80e8-c7cf3ca7c01c.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__4c93dfc0-9990-44dc-a6b8-d29c49f43974.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__4c93dfc0-9990-44dc-a6b8-d29c49f43974.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__4f45d75c-dd91-421f-b417-e9cc5d6ad479.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__4f45d75c-dd91-421f-b417-e9cc5d6ad479.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__69a29e24-fdd7-44c1-a72a-8d862f8bc3c2.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__69a29e24-fdd7-44c1-a72a-8d862f8bc3c2.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__6ecba0d7-8f8b-493d-a96f-02ca59f3687e.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__6ecba0d7-8f8b-493d-a96f-02ca59f3687e.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__88ea4443-e79e-48ec-99de-472164d9e049.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__88ea4443-e79e-48ec-99de-472164d9e049.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__9140b18d-4278-434c-90f9-7122b36e0952.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__9140b18d-4278-434c-90f9-7122b36e0952.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__928c09ce-28e5-4e21-bcd2-cb34d64d5b98.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__928c09ce-28e5-4e21-bcd2-cb34d64d5b98.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__a1177a25-5d16-4d24-9fe6-f1d76733b97b.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__a1177a25-5d16-4d24-9fe6-f1d76733b97b.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__bb3256b4-f8d8-4fcc-b0d1-fd27d61d094d.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__bb3256b4-f8d8-4fcc-b0d1-fd27d61d094d.jpg"
+    },
+    {
+      "Id": "D:\\MEGImageManagement\\MEGEventImagesManagementProj\\MEGEventImageManagement\\MEGEventImageManagement\\wwwroot\\uploads\\2025__c2203376-b762-4147-86f2-10fea57cf38b.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2025__c2203376-b762-4147-86f2-10fea57cf38b.jpg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.MEGEventImageManagement.Microsoft.AspNetCore.StaticWebAssets.props",

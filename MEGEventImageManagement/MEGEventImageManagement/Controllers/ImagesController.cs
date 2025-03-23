@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace MEGEventImageManagement.Controllers
 {
@@ -115,19 +116,6 @@ namespace MEGEventImageManagement.Controllers
 
             return await ExecuteInTransactionAsync(async (connection, transaction) =>
             {
-                //Xóa hết ảnh trong "SK01" nếu có EventId = "SK01"
-                if (images.Any(x => x.EventId == "SK01"))
-                {
-                    var oldImages = await connection.QueryAsync<string>(
-                "SELECT Path FROM Image WHERE EventId = @EventId", new { EventId = "SK01" }, transaction);
-
-                    foreach (var filePath in oldImages)
-                    {
-                        DeleteFile(filePath);
-                    }
-
-                    await connection.ExecuteAsync("DELETE FROM Image WHERE EventId = @EventId", new { EventId = "SK01" }, transaction);
-                }
 
                 int maxId = await GetMaxIdAsync(connection, transaction, "Image");
                 var imagesToInsert = new List<object>();
@@ -230,9 +218,29 @@ namespace MEGEventImageManagement.Controllers
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    var sql = "SELECT * FROM Image";
+                    // 🟢 Truy vấn danh sách ảnh và thông tin sự kiện
+                    var sql = @"
+                            SELECT i.*, e.Name AS EventName
+                            FROM Image i
+                            LEFT JOIN Event e ON i.EventId = e.Id"; // Ghép với bảng Event để lấy tên sự kiện
                     var images = await connection.QueryAsync<Image>(sql);
-                    return Ok(images);
+                    // 🟢 Nhóm dữ liệu theo eventId -> năm
+                    var groupedData = images
+                        .GroupBy(img => img.EventId) // Nhóm theo eventId
+                        .ToDictionary(
+                            evGroup => evGroup.Key, // Key: eventId
+                            evGroup => new
+                            {
+                                name = evGroup.First().EventName, // Lấy tên sự kiện
+                                years = evGroup.GroupBy(img => img.TimeOccurs.Year) // Nhóm theo năm
+                                               .OrderByDescending(y => y.Key) // Sắp xếp năm giảm dần
+                                               .ToDictionary(
+                                                   yGroup => yGroup.Key.ToString(), // Key: Năm
+                                                   yGroup => yGroup.ToList() // Value: Danh sách ảnh
+                                               )
+                            }
+                        );
+                    return Ok(groupedData);
                 }
             }
             catch (Exception ex)
@@ -251,13 +259,25 @@ namespace MEGEventImageManagement.Controllers
                 {
                     var sql = "SELECT * FROM Image WHERE EventId = @EventId";
                     var images = await connection.QueryAsync<Image>(sql, new { EventId = eventId });
-                    return Ok(images);
+
+                    var groupedImages = images
+                        .GroupBy(img => GetYearFromPath(img.Path))
+                        .OrderByDescending(g => g.Key)
+                        .ToDictionary(g => g.Key, g => g.ToList());
+
+                    return Ok(groupedImages);
                 }
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Có lỗi xảy ra! " + ex.Message });
             }
+        }
+
+        private int GetYearFromPath(string path)
+        {
+            var match = Regex.Match(path, "^(\\d{4})_");
+            return match.Success ? int.Parse(match.Groups[1].Value) : 0;
         }
 
         // 🔍 Lấy chi tiết ảnh theo Id
