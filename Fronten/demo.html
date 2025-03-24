@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Thư viện Cropper.js -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <input type="file" id="uploadImage" accept="image/*" />
+    </div>
+
+    <div style="width: 100%; max-width: 400px; margin-top: 10px">
+      <img id="imagePreview" style="max-width: 100%" />
+    </div>
+
+    <button id="cropButton">Cắt ảnh</button>
+
+    <div style="margin-top: 10px">
+      <h3>Ảnh đã cắt:</h3>
+      <canvas id="croppedCanvas"></canvas>
+    </div>
+    <script>
+      $(document).ready(function () {
+        let cropper;
+
+        // Khi chọn ảnh
+        $("#uploadImage").change(function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              $("#imagePreview").attr("src", e.target.result);
+
+              // Xóa cropper cũ nếu có
+              if (cropper) {
+                cropper.destroy();
+              }
+
+              // Khởi tạo Cropper.js với vùng cắt tự do
+              cropper = new Cropper(document.getElementById("imagePreview"), {
+                aspectRatio: NaN, // Không giới hạn tỉ lệ
+                viewMode: 1,
+                movable: true,
+                zoomable: true,
+                rotatable: true,
+                scalable: true,
+                autoCropArea: 0.8,
+              });
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // Khi nhấn nút "Cắt ảnh & Gửi lên server"
+        $("#cropButton").click(function () {
+          if (cropper) {
+            const canvas = cropper.getCroppedCanvas();
+            if (canvas) {
+              const imageBase64 = canvas.toDataURL("image/png"); // Chuyển ảnh thành Base64
+
+              // Đóng gói dữ liệu vào JSON
+              const imageData = {
+                filename: "cropped_image.png",
+                filetype: "image/png",
+                imageData: imageBase64, // Base64 của ảnh đã cắt
+              };
+
+              // Gửi JSON lên server
+              sendImageToServer(imageData);
+            } else {
+              alert("Hãy chọn vùng cắt trước khi nhấn nút cắt!");
+            }
+          }
+        });
+
+        // Hàm gửi dữ liệu JSON lên server bằng AJAX (Axios hoặc Fetch)
+        function sendImageToServer(imageData) {
+          $.ajax({
+            url: "https://your-server.com/upload", // Thay bằng URL API của bạn
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(imageData),
+            success: function (response) {
+              alert("Ảnh đã được gửi lên server thành công!");
+              console.log(response);
+            },
+            error: function (error) {
+              alert("Lỗi khi gửi ảnh lên server!");
+              console.error(error);
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

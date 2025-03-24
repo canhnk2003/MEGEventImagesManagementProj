@@ -22,6 +22,17 @@
       src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
       crossorigin="anonymous"
     ></script>
+    <script src="assets/library/particles/particles.min.js"></script>
+    <style>
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+    </style>
     <style>
       .form-select,
       .btn {
@@ -31,6 +42,8 @@
     </style>
   </head>
   <body class="sb-nav-fixed">
+    <div id="particles-js"></div>
+    <!-- Hiển thị hiệu ứng -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       <!-- Navbar Brand-->
       <a class="navbar-brand ps-3" href="index.html">MEG</a>
@@ -113,12 +126,18 @@
       <div id="layoutSidenav_content">
         <main>
           <div class="container-fluid px-4">
-            <div class="d-flex align-items-center justify-content-between flex-wrap">
+            <div
+              class="d-flex align-items-center justify-content-between flex-wrap"
+            >
               <h1 class="mt-4">Trang chủ</h1>
 
               <!-- Select và Button trình chiếu -->
               <div class="d-flex gap-2">
-                <select id="timeSelect" class="form-select" title="Chọn thời gian delay ảnh chạy">
+                <select
+                  id="timeSelect"
+                  class="form-select"
+                  title="Chọn thời gian delay ảnh chạy"
+                >
                   <option value="">Time delay</option>
                   <option value="1">1s</option>
                   <option value="2">2s</option>
@@ -128,12 +147,33 @@
                   <option value="6">6s</option>
                   <option value="7">7s</option>
                 </select>
-                <select id="eventSelect" class="form-select" title="Chọn một kịch bản để trình chiếu">
+                <select
+                  id="eventSelect"
+                  class="form-select"
+                  title="Chọn một kịch bản để trình chiếu"
+                >
                   <option value="">Chọn sự kiện</option>
                 </select>
-                <button id="btnShowSlideshow" class="btn btn-primary">
+                <button id="btnShowSlideshow" class="btn btn-primary" title="Tạo trình chiếu sự kiện">
                   Trình Chiếu
                 </button>
+                <select id="effectSelect" class="form-select" title="Chọn một hiệu ứng">
+                  <option value="">-- Chọn hiệu ứng --</option>
+                  <option value="tet">
+                    🌸 Hiệu ứng Tết (Hoa đào, hoa mai)
+                  </option>
+                  <option value="noel">❄️ Hiệu ứng Noel (Tuyết rơi)</option>
+                  <option value="halloween">
+                    🎃 Hiệu ứng Halloween (Kẹo, bí ngô)
+                  </option>
+                  <option value="mooncake">🥮 Trung thu (Bánh trung thu)</option>
+                </select>
+                <button id="applyEffect" class="btn btn-success" title="Áp dụng hiệu ứng">
+                  Áp dụng
+                </button>
+
+                <!-- Container chứa hiệu ứng -->
+                <div id="effectContainer"></div>
               </div>
             </div>
             <ol class="breadcrumb mb-4">
@@ -305,9 +345,10 @@
     </div>
     <script src="assets/library/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/library/jquery/jquery-3.7.1.min.js"></script>
-   <script src="js/service/axios-jquery.js"></script>
+    <script src="js/service/axios-jquery.js"></script>
     <script src="js/service/logoutService.js"></script>
     <script src="js/service/indexAdminService.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/service/effectsService.js"></script>
   </body>
 </html>

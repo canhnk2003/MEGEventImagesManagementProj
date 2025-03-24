@@ -22,8 +22,20 @@
       src="assets/library/fontawesome-free-6.7.2-desktop/all.js"
       crossorigin="anonymous"
     ></script>
+    <script src="assets/library/particles/particles.min.js"></script>
+    <style>
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+    </style>
   </head>
   <body class="sb-nav-fixed">
+    <div id="particles-js"></div>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       <!-- Navbar Brand-->
       <a class="navbar-brand ps-3" href="index.html">MEG</a>
@@ -135,6 +147,22 @@
 
               <!-- Nút "Xóa đã chọn" và "Thêm mới" bên phải -->
               <div class="col-md-9 col-6 text-end">
+                <!-- Nút "Select All" -->
+                <button
+                  class="btn btn-primary me-2"
+                  id="btnSelectAll"
+                  title="Chọn tất cả"
+                >
+                <i class="fa-solid fa-check-double"></i> Select All
+                </button>
+                <!-- Nút "Select All" -->
+                <button
+                  class="btn btn-secondary me-2"
+                  id="btnDeselectAll"
+                  title="Bỏ chọn tất cả"
+                >
+                <i class="fa-solid fa-square-xmark"></i> Deselect All
+                </button>
                 <!-- Nút "Xóa đã chọn" -->
                 <button
                   class="btn btn-danger me-2"
@@ -305,6 +333,7 @@
     <script src="js/service/axios-jquery.js"></script>
     <script src="js/service/viewImagesByEventService.js"></script>
     <script src="js/service/logoutService.js"></script>
+    <script src="js/service/effectsService.js"></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>

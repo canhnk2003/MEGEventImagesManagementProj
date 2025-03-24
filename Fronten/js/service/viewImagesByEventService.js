@@ -99,22 +99,45 @@ $(document).ready(function () {
     fileInput.trigger("click");
   });
 
-  // 🔹 Xử lý khi người dùng chọn ảnh
+  //Xử lý sự kiện khi nhấn thêm trong cửa sổ File Explore
   fileInput.on("change", function () {
+    console.log("File input changed");
     const files = this.files;
     if (!files || files.length === 0) return;
-
+    const today = new Date().toISOString();
     const formData = new FormData();
     const imagesMetadata = [];
-    const today = new Date().toISOString();
 
+    let totalSize = 0; // 🛑 Biến để tính tổng dung lượng
+
+    //Thêm dữ liệu ảnh vào mảng imagesMetadata
     $.each(files, function (index, file) {
-      if (!file.type.startsWith("image/")) return; // Chỉ chấp nhận file ảnh
+      if (!file.type.startsWith("image/")) return; // Bỏ qua file không phải ảnh
+
+      totalSize += file.size; // ✅ Cộng dồn dung lượng
+
+      if (totalSize > 157286400) {
+        // 150MB = 157286400 bytes
+        alert("Tổng dung lượng ảnh không được vượt quá 150MB!");
+        return false; // 🛑 Dừng lặp
+      }
 
       formData.append("files", file);
+      // ✅ Tách thông tin từ tên file theo định dạng: id_Họ tên_Mô tả
+      const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, ""); // Loại bỏ phần mở rộng (.jpg, .png,...)
+      const nameParts = fileNameWithoutExt.split("_");
+
+      if (nameParts.length < 3) {
+        alert(`Tên file "${file.name}" không đúng định dạng!`);
+        return false; // 🛑 Dừng lặp nếu tên file không hợp lệ
+      }
+
+      const fullName = nameParts[1].trim(); // Lấy "Họ tên"
+      const description = nameParts.slice(2).join("_").trim(); // Lấy phần mô tả
+      const fullDescription = `${fullName} - ${description}`; // ✅ Mô tả = "Họ tên - Mô tả"
       imagesMetadata.push({
-        name: file.name,
-        description: "",
+        name: fullName,
+        description: fullDescription,
         timeOccurs: today,
         path: "",
         eventId: eventId,
@@ -122,14 +145,11 @@ $(document).ready(function () {
       });
     });
 
-    if (imagesMetadata.length === 0) {
-      alert("Vui lòng chọn ít nhất một ảnh hợp lệ.");
-      return;
-    }
+    if (imagesMetadata.length === 0) return;
 
     formData.append("metadataJson", JSON.stringify(imagesMetadata));
 
-    // 🔹 Gửi ảnh lên server qua API
+    //Gọi API thêm ảnh
     $.ajax({
       url: `${BASE_URL}/api/v1/Images/add`,
       method: "POST",
@@ -137,16 +157,13 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (response) {
-        alert("Thêm ảnh thành công!");
-        location.reload(); // Refresh lại trang
+        alert(response.message);
+        location.reload(); // Refresh lại trang sau khi thêm ảnh thành công
       },
       error: function () {
         alert("Lỗi khi tải ảnh lên. Vui lòng thử lại.");
       },
     });
-
-    // Xóa giá trị input file để lần sau chọn lại ảnh
-    fileInput.val("");
   });
 
   // Xử lý tìm kiếm sự kiện
@@ -266,5 +283,15 @@ $(document).ready(function () {
       currentIndex--;
       showImage(currentIndex);
     }
+  });
+  // 🔹 Xử lý sự kiện "Chọn tất cả"
+  $("#btnSelectAll").click(function () {
+    console.log("Canh");
+    $(".select-checkbox").prop("checked", true).trigger("change");
+  });
+
+  // 🔹 Xử lý sự kiện "Bỏ chọn tất cả"
+  $("#btnDeselectAll").click(function () {
+    $(".select-checkbox").prop("checked", false).trigger("change");
   });
 });
