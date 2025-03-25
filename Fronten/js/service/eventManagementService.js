@@ -136,19 +136,19 @@ $(document).ready(function () {
       formData.append("files", file);
       // ✅ Tách thông tin từ tên file theo định dạng: id_Họ tên_Mô tả
       const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, ""); // Loại bỏ phần mở rộng (.jpg, .png,...)
-      const nameParts = fileNameWithoutExt.split("_");
+      // const nameParts = fileNameWithoutExt.split("_");
 
-      if (nameParts.length < 3) {
-        alert(`Tên file "${file.name}" không đúng định dạng!`);
-        return false; // 🛑 Dừng lặp nếu tên file không hợp lệ
-      }
+      // if (nameParts.length < 3) {
+      //   alert(`Tên file "${file.name}" không đúng định dạng!`);
+      //   return false; // 🛑 Dừng lặp nếu tên file không hợp lệ
+      // }
 
-      const fullName = nameParts[1].trim(); // Lấy "Họ tên"
-      const description = nameParts.slice(2).join("_").trim(); // Lấy phần mô tả
-      const fullDescription = `${fullName} - ${description}`; // ✅ Mô tả = "Họ tên - Mô tả"
+      // const fullName = nameParts[1].trim(); // Lấy "Họ tên"
+      // const description = nameParts.slice(2).join("_").trim(); // Lấy phần mô tả
+      // const fullDescription = `${fullName} - ${description}`; // ✅ Mô tả = "Họ tên - Mô tả"
       imagesMetadata.push({
-        name: fullName,
-        description: fullDescription,
+        name: fileNameWithoutExt,
+        description: fileNameWithoutExt,
         timeOccurs: today,
         path: "",
         eventId: eventId,

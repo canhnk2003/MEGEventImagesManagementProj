@@ -164,10 +164,10 @@ $(document).ready(function () {
 
       // Thêm slide ảnh
       carouselInner.append(`
-        <div class="carousel-item ${activeClass} h-100">
+        <div class="carousel-item ${activeClass} ">
           <img src="${
             image.src
-          }" class="d-block w-100 h-100 object-fit-cover" alt="Slide ${
+          }" class="d-block " alt="Slide ${
         index + 1
       }">
           <div class="carousel-caption d-none d-md-block">

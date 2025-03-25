@@ -19,8 +19,30 @@
 /* Chế độ trình chiếu */
 #fullscreen-carousel {
     z-index: 1001;
+    
+    height: 100vh;
 }
 
+#eventCarousel .carousel-inner{
+    height: 1000px;
+}
+#eventCarousel .carousel-item{
+    height: 100%;
+}
+#eventCarousel .carousel-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100% !important;
+    width: 100%;
+    object-fit: contain;
+    /* Đảm bảo ảnh không bị cắt */
+}
+
+#eventCarousel{
+    height: 100%;
+}
 /* Căn giữa carousel + giảm width */
 .carousel-container {
     display: flex;
@@ -30,14 +52,32 @@
 #demo {
     width: 80%;
     max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.153);
     /* Giới hạn chiều rộng tối đa */
 }
 
-.carousel-item img {
-    width: 100%;
+#demo p {
+    font-size: 25px;
+}
+
+.carousel-inner {
     height: 500px;
-    /* Mặc định cho PC */
-    object-fit: cover;
+    /* Điều chỉnh chiều cao theo mong muốn */
+}
+
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    /* Đảm bảo ảnh không bị cắt */
 }
 
 #home-section {
@@ -131,9 +171,6 @@
 }
 
 @media (max-width: 992px) {
-    .carousel-item img {
-        height: 200px;
-    }
 
     .card img {
         height: 120px;
@@ -141,7 +178,7 @@
 }
 
 @media (max-width: 768px) {
-    .carousel-item img {
+    .carousel-inner {
         height: 200px;
     }
 
@@ -190,11 +227,6 @@
 }
 
 /* Chế độ xem ảnh */
-/* Tăng chiều cao modal */
-.modal-dialog {
-    max-width: 80vw;
-    /* Độ rộng tối đa */
-}
 
 .modal-content {
     height: 80vh;
