@@ -75,12 +75,12 @@ $(document).ready(function () {
 
       // Thêm ảnh vào carousel
       carouselInner.append(`
-                <div class="carousel-item ${activeClass} h-100" data-bs-interval="${
+                <div class="carousel-item ${activeClass}" data-bs-interval="${
         delayTime * 1000
       }">
                     <img src="${baseImageUrl}${
         image.path
-      }" class="d-block w-100 h-100 object-fit-cover" alt="Ảnh sự kiện">
+      }" class="d-block" alt="Ảnh sự kiện">
                     <div class="carousel-caption">
                         <h3>${year}</h3>
                         <p>${image.description || "Không có mô tả"}</p>

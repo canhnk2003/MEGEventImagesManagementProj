@@ -19,29 +19,19 @@
 /* Chế độ trình chiếu */
 #fullscreen-carousel {
     z-index: 1001;
-    
+}
+#fullscreen-carousel .carousel-item{
     height: 100vh;
 }
-
-#eventCarousel .carousel-inner{
-    height: 1000px;
-}
-#eventCarousel .carousel-item{
-    height: 100%;
-}
-#eventCarousel .carousel-item img {
-    position: absolute;
+#fullscreen-carousel .carousel-item img {
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 100% !important;
+    height: 100%;
     width: 100%;
     object-fit: contain;
     /* Đảm bảo ảnh không bị cắt */
-}
-
-#eventCarousel{
-    height: 100%;
 }
 /* Căn giữa carousel + giảm width */
 .carousel-container {
@@ -60,16 +50,16 @@
     font-size: 25px;
 }
 
-.carousel-inner {
+#demo .carousel-inner {
     height: 500px;
     /* Điều chỉnh chiều cao theo mong muốn */
 }
 
-.carousel-item {
+#demo .carousel-item {
     height: 100%;
 }
 
-.carousel-item img {
+#demo .carousel-item img {
     position: absolute;
     top: 50%;
     left: 50%;
